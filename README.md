@@ -7,5 +7,7 @@ gym for database course
 - Mechanics
 - Coach
 
+The description displayed above will be all roles in the GYM
+
 ## Item information
 ...
