@@ -1,6 +1,8 @@
 # Gym
 gym for database course
 
+ERM Online Drawing Tool: https://www.lucidchart.com/
+
 ## Gym description
 
 ### Person Structure
