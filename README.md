@@ -28,33 +28,30 @@ The description displayed above will be all roles in the GYM
 
 ### Person
 
+#### User (Base)
+- name
+- Status
+- ID
+- Age
+- Gender
+
 #### Coach
 - level
-- Status
-- Name
 - Num
-- Gender
-- Age
+- ID
 
 #### Member
 - level
 - expiration time
-- Name
-- Id
-- Gender
-- Age
+- ID
 
 #### Manager
 - Num
-- Status
-- Name
-- Age
+- ID
 
 #### Maintainer
 - Num
-- Status
-- Name
-- Age
+- ID
 
 ### Relationship
 - Manager (servce) Member
