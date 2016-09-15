@@ -2,6 +2,8 @@
 gym for database course
 
 ## Gym description
+
+### Person Structure
 - Manager
 - Member
 - Mechanics
@@ -9,5 +11,4 @@ gym for database course
 
 The description displayed above will be all roles in the GYM
 
-## Item information
-...
+## Person/Facilities description
