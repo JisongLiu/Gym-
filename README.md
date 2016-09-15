@@ -8,7 +8,7 @@ ERM Online Drawing Tool: https://www.lucidchart.com/
 ### Person Structure
 - Manager
 - Member
-- Mechanics
+- Maintainer
 - Coach
 
 ### Item Structure
@@ -18,13 +18,44 @@ ERM Online Drawing Tool: https://www.lucidchart.com/
 The description displayed above will be all roles in the GYM
 
 ## Person/Facilities description
-
-### Person (Base Structure)
+### Facilities
+- Category
+- Number
+- Expriation date
+- Status
 - Name
-- Id
-- Birth date
-- Expiration Date
+- Brand
+
+### Person
 
 #### Coach
-- Person
-- Reservation Slot
+- level
+- Status
+- Name
+- Num
+- Gender
+- Age
+#### Member
+- level
+- expiration time
+- Name
+- Id
+- Gender
+- Age
+#### Manager
+- Num
+- Status
+- Name
+- Age
+####Maintainer
+- Num
+- Status
+- Name
+- Age
+
+### Relationship
+- Manager (servce) Member
+- Manager  (manager) Coach
+- Coach (train) Member  train should have an attribute, time slot
+- Maintainer (Maintain) Facilities
+Since there is no obligable limitation for member to use facilities, we should not have a relationship between member and facilities.
