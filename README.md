@@ -58,7 +58,7 @@ The description displayed above will be all roles in the GYM
 
 ### Relationship
 - Manager (servce) Member
-- Manager  (manager) Coach
+- Manager  (manager) Coach & Maintainer
 - Coach (train) Member  train should have an attribute, time slot
 - Maintainer (Maintain) Facilities
 -Since there is no obligable limitation for member to use facilities, we should not have a relationship between member and facilities.
