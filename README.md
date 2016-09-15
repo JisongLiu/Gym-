@@ -35,6 +35,7 @@ The description displayed above will be all roles in the GYM
 - Num
 - Gender
 - Age
+
 #### Member
 - level
 - expiration time
@@ -42,12 +43,14 @@ The description displayed above will be all roles in the GYM
 - Id
 - Gender
 - Age
+
 #### Manager
 - Num
 - Status
 - Name
 - Age
-####Maintainer
+
+#### Maintainer
 - Num
 - Status
 - Name
