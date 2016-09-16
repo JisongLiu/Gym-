@@ -3,6 +3,8 @@ gym for database course
 
 ERM Online Drawing Tool: https://www.lucidchart.com/
 
+For GYM Facilities: http://www.leehayward.com/gym_equipment/
+
 ## Gym description
 
 ### Person Structure
