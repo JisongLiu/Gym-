@@ -33,7 +33,7 @@ The description displayed above will be all roles in the GYM
 #### User (Base)
 - name
 - Status
-- ID
+- ID (using hash in tuple to avoid auto increment or misspelling)
 - Age
 - Gender
 
