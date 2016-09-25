@@ -1,4 +1,4 @@
-# Gym
+# Cloud Gym Management System 
 gym for database course
 
 ERM Online Drawing Tool: https://www.lucidchart.com/
@@ -7,57 +7,21 @@ For GYM Facilities: http://www.leehayward.com/gym_equipment/
 
 ## Gym description
 
-### Person Structure
-- Manager
-- Member
-- Maintainer
-- Coach
+The Cloud Gym Management System are aimed to provide the modern informatized fitness center supported by the convenient and flexible management system. By deploying this system, manager would be benefited from the real-time management on equipment, membership of fitness center. Member and fitness coach can arrange a time slot for their fitness training plan. Maintainers could know whether certain equipment is out of state. Moreover, manager can supervise this process and urge maintainers to address the problem of frastructure if the problem is unresponsive for a specific time period.
 
-### Item Structure
-- Weight
-- Running machine
-
-The description displayed above will be all roles in the GYM
-
-## Person/Facilities description
-### Facilities
-- Category
-- Number
-- Expriation date
-- Status
-- Name
-- Brand
-
-### Person
-
-#### User (Base)
-- name
-- Status
-- ID (using hash in tuple to avoid auto increment or misspelling)
-- Age
-- Gender
-
-#### Coach
-- level
-- Num
-- ID
-
-#### Member
-- level
-- expiration time
-- ID
-
-#### Manager
-- Num
-- ID
-
-#### Maintainer
-- Num
-- ID
+### Entity and analysis:
+- Manager: ID, Expiration Date
+- Coach: ID, expiration time, level
+- Member:ID, level, expiration data
+- Maintainer:  ID, expiration time
+- Equipment: Brand, Status, ID, Category
+- Person (from logic layer, Manager, Coach, Member and Maintainer is a person): ID, Name, Age, Gender
 
 ### Relationship
-- Manager (servce) Member
-- Manager  (manager) Coach & Maintainer
-- Coach (train) Member  train should have an attribute, time slot
-- Maintainer (Maintain) Facilities
+- (Member, Manager, Coach, Maintainer) ISA Person
+- Maintainer MAINTAINS Equipment ( this table will have MaintainerID, EquipmentID)
+- Manager MANAGER Coach, Maintainer ( this table will have ManagerID and XXXID)
+- Member RESERVE Coach （this table will have MemberID, CoachID, Timeslot）
+- Manager SERVER Member (this table will have ManagerID and MemberID)
+
 -Since there is no obligable limitation for member to use facilities, we should not have a relationship between member and facilities.
