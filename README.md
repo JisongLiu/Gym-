@@ -25,3 +25,11 @@ The Cloud Gym Management System are aimed to provide the modern informatized fit
 - Manager SERVER Member (this table will have ManagerID and MemberID)
 
 -Since there is no obligable limitation for member to use facilities, we should not have a relationship between member and facilities.
+
+### Limitations on Relationship
+- one facility could only be maintained by one maintainer
+- a member could reserve at most one coach in a time slot
+- a member could reserve facility that is reservable in a time slot
+- a coach could organize at most one course in a time slot
+- a hall could be reserved by at most one coach in a time slot
+- Course and Open are weak entity
