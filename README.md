@@ -27,7 +27,7 @@ The Cloud Gym Management System are aimed to provide the modern informatized fit
 -Since there is no obligable limitation for member to use facilities, we should not have a relationship between member and facilities.
 
 ### Limitations on Relationship
-- one facility could only be maintained by one maintainer
+- one facility should be at least maintained by one maintainer
 - a member could reserve at most one coach in a time slot
 - a member could reserve facility that is reservable in a time slot
 - a coach could organize at most one course in a time slot
