@@ -70,6 +70,15 @@ CREATE TABLE Equipment(
 );
 ```
 ## relationship table manager-equipment
+```sql
+CREATE TABLE Maintain(
+    JobID int,
+    Expr_Date timestamp,
+    Foreign KEY(EID),
+    Foreign KEY(Manid)
+    PRIMARY KEY(JobID)
+);
+```
 ## relationship table manager-member
 ## relationship table manager-coach
 ## relationship table member-equipment
