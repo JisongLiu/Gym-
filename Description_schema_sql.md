@@ -88,6 +88,13 @@ CREATE TABLE Manager_member(
 );
 ```
 ## relationship table manager-coach
+```sql
+CREATE TABLE Manager_member(
+    Foreign KEY(Manid),
+    Foreign KEY(Coaid),
+    Primary KEY(Coaid)
+);
+```
 ## relationship table member-equipment
 ```sql
 CREATE TABLE memberEquipment(
