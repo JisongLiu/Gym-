@@ -96,5 +96,6 @@ CREATE TABLE memberEquipment(
     Capacity int,
     PRIMARY KEY(Name)
 );
+```
 ## relationship table member-coach
 ## relationship table member-coach-hall
