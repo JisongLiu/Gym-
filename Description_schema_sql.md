@@ -82,8 +82,8 @@ CREATE TABLE Maintain(
 ## relationship table manager-member
 ```sql
 CREATE TABLE Manager_member(
-    Foreign KEY(Manid),
-    Foreign KEY(Pid),
+    Foreign KEY(Manid) REFERENCES Manager,
+    Foreign KEY(Pid) REFERENCES Member,
     Primary KEY(Pid)
 );
 ```
