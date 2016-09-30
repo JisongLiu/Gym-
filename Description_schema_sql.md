@@ -20,7 +20,7 @@ CREATE TABLE Coach(
     Age int,
     Name text,
     Gender text,
-    Calendar 
+    Calendar ARRAY [2] [20],
     Level int
 );
 ```
