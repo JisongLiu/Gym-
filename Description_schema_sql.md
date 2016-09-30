@@ -8,6 +8,14 @@ CREATE TABLE Person(
     Age int,
     Name text,
     Gender text
-)
+);
+```
 
+## Manager
+
+```sql
+CREATE TABLE Manager(
+    Pid int references Person,
+    Ex_date int
+);
 ```
