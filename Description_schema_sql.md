@@ -82,16 +82,16 @@ CREATE TABLE Maintain(
 ## relationship table manager-member
 ```sql
 CREATE TABLE Manager_member(
-    Foreign KEY(Manid) REFERENCES Manager,
-    Foreign KEY(Pid) REFERENCES Member,
+    FOREIGN KEY(Manid) REFERENCES Manager,
+    FOREIGN KEY(Pid) REFERENCES Member,
     Primary KEY(Pid)
 );
 ```
 ## relationship table manager-coach
 ```sql
 CREATE TABLE Manager_coach(
-    Foreign KEY(Manid) REFERENCES Manager,
-    Foreign KEY(Coaid) REFERENCES Coach,
+    FOREIGN KEY(Manid) REFERENCES Manager,
+    FOREIGN KEY(Coaid) REFERENCES Coach,
     Primary KEY(Coaid)
 );
 ```
