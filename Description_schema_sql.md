@@ -3,5 +3,11 @@
 ## Person
 
 ```sql
-CREATE TABLE Person
+CREATE TABLE Person(
+    Pid text primary key,
+    Age int,
+    Name text,
+    Gender text
+)
+
 ```
