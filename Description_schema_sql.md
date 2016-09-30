@@ -16,6 +16,6 @@ CREATE TABLE Person(
 ```sql
 CREATE TABLE Manager(
     Pid int references Person,
-    Ex_date double
+    Ex_date DATE
 );
 ```
