@@ -4,24 +4,26 @@
 
 ```sql
 CREATE TABLE Manager(
-    Manid text primary key,
+    Manid text,
     Ex_date DATE,
     Age int,
     Name text,
-    Gender text
+    Gender text,
+    primary key(Manid)
 );
 ```
 
 ## Coach
 ```sql
 CREATE TABLE Coach(
-    Coaid text primary key,
+    Coaid text,
     Ex_date DATE,
     Age int,
     Name text,
     Gender text,
-    Calendar ARRAY [2] [20],
-    Level int
+    Calendar timestamp[2][20],
+    Level int,
+    PRIMARY KEY(Coaid)
 );
 ```
 ## Course
@@ -49,11 +51,11 @@ CREATE TABLE Member(
 ## Equipment
 ```sql
 CREATE TABLE Equipment(
-    ID text,
+    EID text,
     Brand text,
     Status text,
     Catagory text,
     Calendar timestamp[2][20];
-    PRIMARY KEY(ID)
+    PRIMARY KEY(EID)
 );
 ```
