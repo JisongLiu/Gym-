@@ -29,10 +29,11 @@ CREATE TABLE Coach(
 ## Course
 ```sql
 CREATE TABLE Course(
+    CID text,
     Name text,
     Description text,
     Tag text,
-    PRIMARY KEY(Name)
+    PRIMARY KEY(CID)
 );
 ```
 ## Member
@@ -72,5 +73,12 @@ CREATE TABLE Equipment(
 ## relationship table manager-member
 ## relationship table manager-coach
 ## relationship table member-equipment
+```sql
+CREATE TABLE memberEquipment(
+    Reservation timestamps,
+    Name text,
+    Capacity int,
+    PRIMARY KEY(Name)
+);
 ## relationship table member-coach
 ## relationship table member-coach-hall
