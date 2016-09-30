@@ -74,8 +74,8 @@ CREATE TABLE Equipment(
 CREATE TABLE Maintain(
     JobID int,
     Expr_Date timestamp,
-    Foreign KEY(EID),
-    Foreign KEY(Manid)
+    FOREIGN KEY(EID) REFERENCES Equipment,
+    FOREIGN KEY(Manid) REFERENCES Manager,
     PRIMARY KEY(JobID)
 );
 ```
