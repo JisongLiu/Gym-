@@ -59,3 +59,20 @@ CREATE TABLE Equipment(
     PRIMARY KEY(EID)
 );
 ```
+## hall
+```sql
+CREATE TABLE Equipment(
+    EID text,
+    Brand text,
+    Status text,
+    Catagory text,
+    Calendar timestamp[2][20];
+    PRIMARY KEY(EID)
+);
+```
+## relationship table manager-equipment
+## relationship table manager-member
+## relationship table manager-coach
+## relationship table member-equipment
+## relationship table member-coach
+## relationship table member-coach-hall
