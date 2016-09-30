@@ -15,7 +15,7 @@ CREATE TABLE Person(
 
 ```sql
 CREATE TABLE Manager(
-    Pid int references Person,
+    Pid text references Person,
     Ex_date DATE
 );
 ```
