@@ -26,16 +26,6 @@ CREATE TABLE Coach(
     PRIMARY KEY(Coaid)
 );
 ```
-## Course
-```sql
-CREATE TABLE Course(
-    CID text,
-    Name text,
-    Description text,
-    Tag text,
-    PRIMARY KEY(CID)
-);
-```
 ## Member
 ```sql
 CREATE TABLE Member(
@@ -47,6 +37,16 @@ CREATE TABLE Member(
     Name text,
     Gender text
     PRIMARY KEY(Pid)
+);
+```
+## Course
+```sql
+CREATE TABLE Course(
+    CID text,
+    Name text,
+    Description text,
+    Tag text,
+    PRIMARY KEY(CID)
 );
 ```
 ## Equipment
