@@ -53,7 +53,7 @@ CREATE TABLE Equipment(
     Brand text,
     Status text,
     Catagory text,
-    Calendar,
+    Calendar timestamp[2][20];
     PRIMARY KEY(ID)
 );
 ```
