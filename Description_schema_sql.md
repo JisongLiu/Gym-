@@ -99,10 +99,34 @@ CREATE TABLE Manager_coach(
 ```sql
 CREATE TABLE memberEquipment(
     Reservation timestamps,
-    Name text,
-    Capacity int,
-    PRIMARY KEY(Name)
+    Pid text,
+    Eid text,
+    FORMARY KEY(Pid) REFERENCES Member,
+    FORMARY KEY(Eid) REFERENCES Equipment,
+    PRIMARY KEY(Reseration,Eid)
 );
 ```
 ## relationship table member-coach
+```sql
+CREATE TABLE train(
+    TimeSlot timestamps,
+    Coaid text,
+    Pid text,
+    FORMARY KEY(Pid) REFERENCES Member,
+    FORMARY KEY(Coaid) REFERENCES Coach,
+    PRIMARY KEY(TimeSlot,Coaid)
+);
+```
 ## relationship table member-coach-hall
+```sql
+CREATE TABLE train(
+    TimeSlot timestamps,
+    Coaid text,
+    Cid text,
+    Name text,
+    FORMARY KEY(Cid) REFERENCES Course,
+    FORMARY KEY(Coaid) REFERENCES Coach,
+    FORMARY KEY(Name) REFERENCES Hall,
+    PRIMARY KEY(timestampes,Name)
+);
+```
