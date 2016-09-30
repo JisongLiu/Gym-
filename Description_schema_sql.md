@@ -62,12 +62,10 @@ CREATE TABLE Equipment(
 ## hall
 ```sql
 CREATE TABLE Equipment(
-    EID text,
-    Brand text,
-    Status text,
-    Catagory text,
-    Calendar timestamp[2][20];
-    PRIMARY KEY(EID)
+    Loacatin text,
+    Name text,
+    Capacity int,
+    PRIMARY KEY(Name)
 );
 ```
 ## relationship table manager-equipment
