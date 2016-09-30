@@ -1,21 +1,26 @@
 # ER Diagram to SQL
 
-## Person
+## Manager
 
 ```sql
-CREATE TABLE Person(
-    Pid text primary key,
+CREATE TABLE Manager(
+    Manid text primary key,
+    Ex_date DATE,
     Age int,
     Name text,
     Gender text
 );
 ```
 
-## Manager
-
+## Coach
 ```sql
-CREATE TABLE Manager(
-    Pid text references Person,
-    Ex_date DATE
+CREATE TABLE Coach(
+    Coaid text primary key,
+    Ex_date DATE,
+    Age int,
+    Name text,
+    Gender text,
+    Calendar
+    Level int
 );
 ```
