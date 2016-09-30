@@ -90,7 +90,7 @@ CREATE TABLE Manager_member(
 ## relationship table manager-coach
 ```sql
 CREATE TABLE Manager_coach(
-    Foreign KEY(Manid),
+    Foreign KEY(Manid) REFERENCES Manager,
     Foreign KEY(Coaid),
     Primary KEY(Coaid)
 );
