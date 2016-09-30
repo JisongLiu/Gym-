@@ -80,6 +80,13 @@ CREATE TABLE Maintain(
 );
 ```
 ## relationship table manager-member
+```sql
+CREATE TABLE Manager_member(
+    Foreign KEY(Manid),
+    Foreign KEY(Pid),
+    Primary KEY(Pid)
+);
+```
 ## relationship table manager-coach
 ## relationship table member-equipment
 ```sql
