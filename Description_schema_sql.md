@@ -29,7 +29,7 @@ CREATE TABLE Coach(
 CREATE TABLE Member(
     Level int,
     Times int,
-    ExpirationData data,
+    Ex_date DATE,
     Pid text PRIMARY KEY,
     Age int,
     Name text,
