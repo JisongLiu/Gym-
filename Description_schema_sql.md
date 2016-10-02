@@ -4,26 +4,24 @@
 
 ```sql
 CREATE TABLE Manager(
-    Manid text,
+    Manid text PRIMARY KEY,
     Ex_date DATE,
     Age int,
     Name text,
-    Gender text,
-    primary key(Manid)
+    Gender text
 );
 ```
 
 ## Coach
 ```sql
 CREATE TABLE Coach(
-    Coaid text,
+    Coaid text PRIMARY KEY,
     Ex_date DATE,
     Age int,
     Name text,
     Gender text,
     Calendar timestamp[2][20],
-    Level int,
-    PRIMARY KEY(Coaid)
+    Level int
 );
 ```
 ## Member
@@ -32,51 +30,46 @@ CREATE TABLE Member(
     Level int,
     Times int,
     ExpirationData data,
-    Pid text,
+    Pid text PRIMARY KEY,
     Age int,
     Name text,
     Gender text
-    PRIMARY KEY(Pid)
 );
 ```
 ## Course
 ```sql
 CREATE TABLE Course(
-    CID text,
+    CID text PRIMARY KEY,
     Name text,
     Description text,
-    Tag text,
-    PRIMARY KEY(CID)
+    Tag text
 );
 ```
 ## Equipment
 ```sql
 CREATE TABLE Equipment(
-    EID text,
+    EID text PRIMARY KEY,
     Brand text,
     Status text,
     Catagory text,
-    Calendar timestamp[2][20];
-    PRIMARY KEY(EID)
+    Calendar timestamp[2][20]
 );
 ```
 ## hall
 ```sql
 CREATE TABLE Equipment(
     Loacatin text,
-    Name text,
-    Capacity int,
-    PRIMARY KEY(Name)
+    Name text PRIMARY KEY,
+    Capacity int
 );
 ```
 ## relationship table manager-equipment
 ```sql
 CREATE TABLE Maintain(
-    JobID int,
+    JobID int  PRIMARY KEY,
     Expr_Date timestamp,
     FOREIGN KEY(EID) REFERENCES Equipment,
-    FOREIGN KEY(Manid) REFERENCES Manager,
-    PRIMARY KEY(JobID)
+    FOREIGN KEY(Manid) REFERENCES Manager
 );
 ```
 ## relationship table manager-member
