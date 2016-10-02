@@ -69,7 +69,8 @@ CREATE TABLE Maintain(
     JobID int  PRIMARY KEY,
     Expr_Date timestamp,
     FOREIGN KEY(EID) REFERENCES Equipment,
-    FOREIGN KEY(Manid) REFERENCES Manager
+    FOREIGN KEY(Manid) REFERENCES Manager,
+    UNQIUE(EID)
 );
 ```
 ## relationship table manager-member
@@ -103,8 +104,8 @@ CREATE TABLE memberEquipment(
 ```sql
 CREATE TABLE train(
     TimeSlot timestamps,
-    Coaid text,
-    Pid text,
+    Coaid text NOT NULL,
+    Pid text NOT NULL,
     FORMARY KEY(Pid) REFERENCES Member,
     FORMARY KEY(Coaid) REFERENCES Coach,
     PRIMARY KEY(TimeSlot,Coaid)
@@ -120,6 +121,7 @@ CREATE TABLE train(
     FORMARY KEY(Cid) REFERENCES Course,
     FORMARY KEY(Coaid) REFERENCES Coach,
     FORMARY KEY(Name) REFERENCES Hall,
-    PRIMARY KEY(timestampes,Name)
+    PRIMARY KEY(timestampes,Name),
+    UNIQUE(Cid)
 );
 ```
