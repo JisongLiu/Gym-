@@ -95,8 +95,8 @@ CREATE TABLE memberEquipment(
     Reservation timestamps,
     Pid text,
     Eid text,
-    FORMARY KEY(Pid) REFERENCES Member,
-    FORMARY KEY(Eid) REFERENCES Equipment,
+    FOREIGN KEY(Pid) REFERENCES Member,
+    FOREIGN KEY(Eid) REFERENCES Equipment,
     PRIMARY KEY(Reseration,Eid)
 );
 ```
@@ -106,8 +106,8 @@ CREATE TABLE train(
     TimeSlot timestamps,
     Coaid text NOT NULL,
     Pid text NOT NULL,
-    FORMARY KEY(Pid) REFERENCES Member,
-    FORMARY KEY(Coaid) REFERENCES Coach,
+    FOREIGN KEY(Pid) REFERENCES Member,
+    FOREIGN KEY(Coaid) REFERENCES Coach,
     PRIMARY KEY(TimeSlot,Coaid)
 );
 ```
@@ -118,9 +118,9 @@ CREATE TABLE train(
     Coaid text,
     Cid text,
     Name text,
-    FORMARY KEY(Cid) REFERENCES Course,
-    FORMARY KEY(Coaid) REFERENCES Coach,
-    FORMARY KEY(Name) REFERENCES Hall,
+    FOREIGN KEY(Cid) REFERENCES Course,
+    FOREIGN KEY(Coaid) REFERENCES Coach,
+    FOREIGN KEY(Name) REFERENCES Hall,
     PRIMARY KEY(timestampes,Name),
     UNIQUE(Cid)
 );
