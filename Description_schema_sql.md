@@ -90,7 +90,7 @@ CREATE TABLE memberEquipment(
 ## relationship table member-coach
 ```sql
 CREATE TABLE train(
-    TimeSlot timestamps,
+    TimeSlot timestamp,
     Coaid text NOT NULL,
     Pid text NOT NULL,
     FOREIGN KEY(Pid) REFERENCES Member,
@@ -100,8 +100,8 @@ CREATE TABLE train(
 ```
 ## relationship table member-coach-hall
 ```sql
-CREATE TABLE train(
-    TimeSlot timestamps,
+CREATE TABLE instruction(
+    TimeSlot timestamp,
     Coaid text,
     Cid text,
     Name text,
