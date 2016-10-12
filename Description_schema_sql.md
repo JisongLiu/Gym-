@@ -76,7 +76,7 @@ CREATE TABLE Maintain(
 ## relationship table manager-member
 ```sql
 CREATE TABLE Manager_member(
-    FOREIGN KEY(Manid) REFERENCES Manager,
+    FOREIGN KEY(Manid) NOT NULL REFERENCES Manager,
     FOREIGN KEY(Pid) REFERENCES Member,
     Primary KEY(Pid)
 );
@@ -84,7 +84,7 @@ CREATE TABLE Manager_member(
 ## relationship table manager-coach
 ```sql
 CREATE TABLE Manager_coach(
-    FOREIGN KEY(Manid) REFERENCES Manager,
+    FOREIGN KEY(Manid) NOT NULL REFERENCES Manager,
     FOREIGN KEY(Coaid) REFERENCES Coach,
     Primary KEY(Coaid)
 );
@@ -121,7 +121,8 @@ CREATE TABLE train(
     FOREIGN KEY(Cid) REFERENCES Course,
     FOREIGN KEY(Coaid) REFERENCES Coach,
     FOREIGN KEY(Name) REFERENCES Hall,
-    PRIMARY KEY(timestampes,Name),
-    UNIQUE(Cid)
+    PRIMARY KEY(TimeSlot,Name),
+    UNIQUE(Cid),
+    UNIQUE(Cid, TimeSlot)
 );
 ```
