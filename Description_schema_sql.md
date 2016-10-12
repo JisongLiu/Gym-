@@ -21,7 +21,8 @@ CREATE TABLE Coach(
     Name text,
     Gender text,
     Calendar timestamp[2][20],
-    Level int
+    Level int,
+    Manid text NOT NULL references Manager
 );
 ```
 ## Member
@@ -33,7 +34,8 @@ CREATE TABLE Member(
     Pid text PRIMARY KEY,
     Age int,
     Name text,
-    Gender text
+    Gender text,
+    Manid text NOT NULL references Manager
 );
 ```
 ## Course
@@ -68,27 +70,12 @@ CREATE TABLE Equipment(
 CREATE TABLE Maintain(
     JobID int  PRIMARY KEY,
     Expr_Date timestamp,
-    FOREIGN KEY(EID) REFERENCES Equipment,
-    FOREIGN KEY(Manid) REFERENCES Manager,
-    UNQIUE(EID)
+    EID text UNIQUE REFERENCES Equipment,
+    Manid text REFERENCES Manager
 );
 ```
-## relationship table manager-member
-```sql
-CREATE TABLE Manager_member(
-    FOREIGN KEY(Manid) NOT NULL REFERENCES Manager,
-    FOREIGN KEY(Pid) REFERENCES Member,
-    Primary KEY(Pid)
-);
-```
-## relationship table manager-coach
-```sql
-CREATE TABLE Manager_coach(
-    FOREIGN KEY(Manid) NOT NULL REFERENCES Manager,
-    FOREIGN KEY(Coaid) REFERENCES Coach,
-    Primary KEY(Coaid)
-);
-```
+
+
 ## relationship table member-equipment
 ```sql
 CREATE TABLE memberEquipment(
