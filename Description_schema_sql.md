@@ -80,7 +80,7 @@ CREATE TABLE Maintain(
 ```sql
 CREATE TABLE memberEquipment(
     Reservation timestamps,
-    Pid text,
+    Pid NOT NULL text,
     Eid text,
     FOREIGN KEY(Pid) REFERENCES Member,
     FOREIGN KEY(Eid) REFERENCES Equipment,
