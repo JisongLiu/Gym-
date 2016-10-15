@@ -21,7 +21,6 @@ CREATE TABLE Coach(
     Name text,
     Gender text,
     Calendar timestamp[2][20],
-    Level int,
     Manid text NOT NULL references Manager
 );
 ```
@@ -53,13 +52,12 @@ CREATE TABLE Equipment(
     EID text PRIMARY KEY,
     Brand text,
     Status text,
-    Catagory text,
-    Calendar timestamp[2][20]
+    Catagory text
 );
 ```
 ## hall
 ```sql
-CREATE TABLE Equipment(
+CREATE TABLE Hall(
     Loacatin text,
     Name text PRIMARY KEY,
     Capacity int
