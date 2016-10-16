@@ -16,11 +16,10 @@ CREATE TABLE Manager(
 ```sql
 CREATE TABLE Coach(
     Coaid text PRIMARY KEY,
-    Ex_date DATE,
+    ex_date DATE,
     Age int,
     Name text,
     Gender text,
-    Calendar timestamp[2][20],
     Manid text NOT NULL references Manager
 );
 ```
@@ -44,6 +43,7 @@ CREATE TABLE Course(
     Name text,
     Description text,
     Tag text
+    memlevel integer
 );
 ```
 ## Equipment
@@ -63,55 +63,51 @@ CREATE TABLE Hall(
     Capacity int
 );
 ```
-## relationship table manager-equipment
+## relationship table Maintain
 ```sql
-CREATE TABLE Maintain(
-    JobID int  PRIMARY KEY,
-    Expr_Date timestamp,
-    EID text UNIQUE REFERENCES Equipment,
-    Manid text REFERENCES Manager
-);
+create table maintain
+(eid text references equipment,
+manid text references manager,
+expr_date date,
+jobid text primary key);
 ```
 
 
-## relationship table member-equipment
+## relationship table borrow
 ```sql
-CREATE TABLE memberEquipment(
-    Reservation timestamps,
-    Pid NOT NULL text,
-    Eid text,
-    FOREIGN KEY(Pid) REFERENCES Member,
-    FOREIGN KEY(Eid) REFERENCES Equipment,
-    PRIMARY KEY(Reseration,Eid)
+CREATE TABLE borrow(
+    time time,
+    date date,
+    Pid NOT NULL text references Member,
+    Eid text  references equipment,
+    PRIMARY KEY(eid, time date),
+    CHECK ("time" > '09:00:00'::time AND "time" < '22:00:00'::time)
 );
 ```
-## relationship table member-coach
+## relationship table Train
 ```sql
 CREATE TABLE train(
-    TimeSlot timestamp,
-    Coaid text NOT NULL,
-    Pid text NOT NULL,
-    FOREIGN KEY(Pid) REFERENCES Member,
-    FOREIGN KEY(Coaid) REFERENCES Coach,
-    PRIMARY KEY(TimeSlot,Coaid)
+    time time,
+    date date,
+    Coaid text NOT NULL refereneces coach,
+    Pid text NOT NULL references memeber,
+    PRIMARY KEY(Coaid, date, coaid),
+    CHECK ("time" > '08:00:00'::time AND "time" < '18:00:00'::time)
 );
 ```
-## relationship table member-coach-hall
+## relationship table instruction
 ```sql
 CREATE TABLE instruction(
-    TimeSlot timestamp,
-    Coaid text,
-    Cid text,
-    Name text,
-    FOREIGN KEY(Cid) REFERENCES Course,
-    FOREIGN KEY(Coaid) REFERENCES Coach,
-    FOREIGN KEY(Name) REFERENCES Hall,
-    PRIMARY KEY(TimeSlot,Name),
+    Coaid text REFERENCES Coach,
+    Cid text REFERENCES Course,
+    Name text NOT NULL REFERENCES Hall,
+    timeslot text,
+    PRIMARY KEY(Name),
     UNIQUE(Cid),
     UNIQUE(Cid, TimeSlot)
 );
 ```
-## relationship table course-member
+## relationship table Study
 ```sql
 CREATE TABLE study(
     Cid text REFERENCES course,
