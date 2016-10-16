@@ -111,3 +111,12 @@ CREATE TABLE instruction(
     UNIQUE(Cid, TimeSlot)
 );
 ```
+## relationship table course-member
+```sql
+CREATE TABLE study(
+    Cid text REFERENCES course,
+    Pid text REFERENCES member,
+    Ex_date date,
+    Primary key(Cid,Pid)
+);
+```
