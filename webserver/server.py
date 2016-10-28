@@ -1,16 +1,11 @@
-#!/usr/bin/env python2.7
+
 
 """
 Columbia W4111 Intro to databases
 Example webserver
-
 To run locally
-
     python server.py
-
 Go to http://localhost:8111 in your browser
-
-
 A debugger such as "pdb" may be helpful for debugging.
 Read about it online.
 """
@@ -80,7 +75,6 @@ def before_request():
   This function is run at the beginning of every web request 
   (every time you enter an address in the web browser).
   We use it to setup a database connection that can be used throughout the request
-
   The variable g is globally accessible
   """
   try:
@@ -119,11 +113,9 @@ def teardown_request(exception):
 def index():
   """
   request is a special object that Flask provides to access web request information:
-
   request.method:   "GET" or "POST"
   request.form:     if the browser submitted a form, this contains the data in the form
   request.args:     dictionary of URL arguments e.g., {a:1, b:2} for http://localhost?a=1&b=2
-
   See its API: http://flask.pocoo.org/docs/0.10/api/#incoming-request-data
   """
 
@@ -192,7 +184,9 @@ def another():
 @app.route('/add', methods=['POST'])
 def add():
   name = request.form['name']
-  g.conn.execute('INSERT INTO test1 VALUES (NULL, ?)', name)
+  print name
+  cmd = 'INSERT INTO test1(name) VALUES (:name1)';
+  g.conn.execute(text(cmd), name1 = name);
   return redirect('/')
 
 
@@ -214,13 +208,9 @@ if __name__ == "__main__":
     """
     This function handles command line parameters.
     Run the server using
-
         python server.py
-
     Show the help text using
-
         python server.py --help
-
     """
 
     HOST, PORT = host, port
