@@ -185,8 +185,8 @@ def another():
 def add():
   name = request.form['name']
   print name
-  cmd = 'INSERT INTO test1(name) VALUES (:name1)';
-  g.conn.execute(text(cmd), name1 = name);
+  cmd = 'INSERT INTO test1(name) VALUES (:name1)'
+  g.conn.execute(text(cmd), name1 = name)
   return redirect('/')
 
 
