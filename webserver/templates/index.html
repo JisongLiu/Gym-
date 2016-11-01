@@ -8,12 +8,12 @@
 
 
 <body>
-  <h1>Some famous Computer Scientists</h1>
+  <h1>Columbia Cloud GYM</h1>
   <div>{{data}}</div>
 
   <div>
     {% for n in data %}
-    <div>{{n}}</div>
+    <div>Name: {{n}}</div>
     {% endfor %}
   </div>
 
@@ -21,6 +21,12 @@
 
 <form method="POST" action="/add">
 <p>Name of new computer scientist: <input type="text" name="name"> <input type="submit" value="Add"></p>
+</form>
+
+<form method="POST" action="/login">
+<p>User ID:<input type="text" name="person_id" placeholder="userid"></p>
+<p>Password:<input type="text" name="password" placeholder="userpassword"></p>
+<button type="submit">Login</button>
 </form>
 
 </body>

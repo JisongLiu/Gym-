@@ -179,7 +179,6 @@ def index():
 def another():
   return render_template("anotherfile.html")
 
-
 # Example of adding new data to the database
 @app.route('/add', methods=['POST'])
 def add():
@@ -190,10 +189,12 @@ def add():
   return redirect('/')
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
-    abort(401)
-    this_is_never_executed()
+    User_ID = request.form['UserID']
+    Password = request.form["PSW"]
+    print "ID: " + User_ID + " Password: " + Password
+    return redirect('/')
 
 
 if __name__ == "__main__":
