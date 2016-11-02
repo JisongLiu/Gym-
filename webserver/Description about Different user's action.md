@@ -1,10 +1,14 @@
-# Description about Different user's action
+# Description of the functionalities provided for different user
+This function list envolved Manager, Member and Coach
 
 ## Manager
 
 ### View
-
-'course, equipment, member, coach, maintain'
+- Openning Courses
+- All equipment
+- Member Information
+- Coach Information
+- Equipment under maintainance
 
 ### Modification
 
