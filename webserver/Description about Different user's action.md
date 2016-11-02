@@ -20,8 +20,14 @@ This function list envolved Manager, Member and Coach
 
 ### View
 #### Openning Halls for trainning
+Based on user selection, return a list of available slots
+Getting all hall's name
 ```sql
 SELECT * FROM hall;
+```
+Getting all occupied timeslot of the certain hall
+```sql
+SELECT timeslot FROM instruction WHERE name = "name";
 ```
 #### Personal reserved Priavate trainning course
 #### Personal Courses
