@@ -19,10 +19,13 @@ This function list envolved Manager, Member and Coach
 ## Coach
 
 ### View
-- Openning Halls for trainning
-- Personal reserved Priavate trainning course
-- Personal Courses
-- Instructions? all instruction and all he to only get himself instruction???
+#### Openning Halls for trainning
+```sql
+SELECT * FROM hall;
+```
+#### Personal reserved Priavate trainning course
+#### Personal Courses
+#### Instructions? all instruction and all he to only get himself instruction???
 
 ### Modification
 
