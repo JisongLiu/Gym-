@@ -11,14 +11,18 @@ This function list envolved Manager, Member and Coach
 - Equipment under maintainance
 
 ### Modification
-
-coach, maintain, member, equipment
+- Add/Modify/Delete Coach information
+- Add/Modify/Delete Member information
+- Maintain Euquipment
+- Add/Modify/Delete Equipment Information
 
 ## Coach
 
 ### View
-
-hall, train(only his train), instruction (all instruction and all he to only get himself instruction), study (only his course)
+- Openning Halls for trainning
+- Personal reserved Priavate trainning course
+- Personal Courses
+- Instructions? all instruction and all he to only get himself instruction???
 
 ### Modification
 
@@ -27,8 +31,10 @@ instruction (only can add ID=this.ID)
 ## Member
 
 ### View
-
-study (the course he registered), train (the trained he booked), coach, course, equipment
+- Registed/Available Courses
+- Personal Trainning Slot
+- Peronal Assigned Coach
+- Available Equipment
 
 ### Modification
 
