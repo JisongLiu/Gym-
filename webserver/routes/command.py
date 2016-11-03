@@ -13,7 +13,7 @@ def DELETE(DB, WHERE):
     return "Invalid"
 
 def VERIFY(checked_list):
-    regexp = re.compile(r'[\;|\(|\)|]+')
+    regexp = re.compile(r'[\;|\(|\)]+')
     for n in checked_list:
         if regexp.search(n) is True: return False
     return True
