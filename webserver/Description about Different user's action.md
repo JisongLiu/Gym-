@@ -30,6 +30,7 @@ Getting all occupied timeslot of the certain hall
 SELECT timeslot FROM instruction WHERE name = "name";
 ```
 #### Personal reserved Priavate trainning course
+
 #### Personal Courses
 #### Instructions? all instruction and all he to only get himself instruction???
 
