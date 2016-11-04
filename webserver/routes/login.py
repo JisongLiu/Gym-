@@ -4,7 +4,7 @@ from server import *
 
 @routes.route('/another')
 def another():
-  return render_template("anotherfile.html")
+  return render_template("login_template.html")
 
 # Example of adding new data to the database
 @routes.route('/add', methods=['POST'])

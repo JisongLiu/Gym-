@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <title>Hello World to Stock App</title>
+</head>
+<body>
+<input id="name" placeholder="name">
+<input id="password" placeholder="password">
+<button type = "button" onclick="login()">Login</button>
+<p id="Success">Success?</p>
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>
