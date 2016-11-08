@@ -19,6 +19,7 @@ function login() {
                 identity = result[0]["identity"];
                 if(user_id.length == 0){
                     document.getElementById("Success").innerHTML="Failed to login, please try again";
+                    document.cookie = "";
                 }
                 else{
                     document.cookie = "id=" + user_id + ";path=/"+identity;
