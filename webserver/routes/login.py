@@ -1,6 +1,7 @@
-from flask import render_template
+from flask import render_template,Response
 from . import routes
 from server import *
+import json
 
 @routes.route('/another')
 def another():
@@ -17,7 +18,11 @@ def add():
 
 @routes.route('/login', methods=['POST'])
 def login():
-    User_ID = request.form['UserID']
-    Password = request.form["PSW"]
-    print "ID: " + User_ID + " Password: " + Password
-    return redirect('/')
+    data = request.get_json()
+    print data
+    returned = {}
+    returned['result'] = 'success'
+    passed_data = [returned]
+    json_data = json.dumps(passed_data)
+    resp = Response(response=json_data,status=200, mimetype="application/json")
+    return(resp)
