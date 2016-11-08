@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/fav-icon.png') }}" />
+		<link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel='stylesheet' type='text/css' />
+		<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel='stylesheet' type='text/css' />
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+		 <!-- Custom Theme files -->
+		<link href="{{ url_for('static', filename='css/login_style.css') }}" rel='stylesheet' type='text/css' />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<!----webfonts---->
+		<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,300,500,700,800,900,600,200' rel='stylesheet' type='text/css'>
+</head>
+<body onload = "securitycheck()">
+ 		<h1 id="Success"></h1>
+<script src="{{ url_for('static', filename='js/coach.js') }}"></script>
+</body>
+</html>

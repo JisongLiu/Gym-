@@ -1,4 +1,3 @@
-var user_name = '';
 var pre_url = 'http://localhost:8111/'
 
 function login() {
@@ -16,13 +15,16 @@ function login() {
             //json object to sent to the authentication url
             success: function (result) {
                 var output = '';
-                user_name = result[0]["name"];
-                if(user_name.length == 0){
+                user_id = result[0]["id"];
+                identity = result[0]["identity"];
+                if(user_id.length == 0){
                     document.getElementById("Success").innerHTML="Failed to login, please try again";
                 }
                 else{
-                    window.location = pre_url;
+                    document.cookie = "id=" + user_id + ";path=/"+identity;
+                    window.location = pre_url+identity;
                 }
                 }
         });
 }
+

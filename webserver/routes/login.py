@@ -7,24 +7,26 @@ import json
 def another():
     return render_template("login_template.html")
 
-# Example of adding new data to the database
-@routes.route('/add', methods=['POST'])
-def add():
-    name = request.form['name']
-    print name
-    g.conn.execute('INSERT INTO test1(name) VALUES (%s)', name)
-    return redirect('/')
 
 
 @routes.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+    returned = {'id':'', 'identity':''}
     #print type(data) data type dict
     #  yg5632 Yu Gu
-    cursor = g.conn.execute('SELECT name from member where pid = %s and name = %s;', data['name'],data['password'])
-    returned = {'name':''}
+    cursor = g.conn.execute('SELECT pid from member where pid = %s and name = %s;', data['name'],data['password'])
     for row in cursor:
-        returned['name'] = row[0]
+        returned['id'] = row[0]
+        returned['identity'] = 'member'
+    cursor = g.conn.execute('SELECT coaid from coach where coaid = %s and name = %s;', data['name'],data['password'])
+    for row in cursor:
+        returned['id'] = row[0]
+        returned['identity'] = 'coach'
+    cursor = g.conn.execute('SELECT manid from manager where manid = %s and name = %s;', data['name'],data['password'])
+    for row in cursor:
+        returned['id'] = row[0]
+        returned['identity'] = 'manager'
     passed_data = [returned]
     json_data = json.dumps(passed_data)
     resp = Response(response=json_data,status=200, mimetype="application/json")
