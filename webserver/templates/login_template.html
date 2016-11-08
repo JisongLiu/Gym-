@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/fav-icon.png') }}" />
 		<link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel='stylesheet' type='text/css' />
 		<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel='stylesheet' type='text/css' />
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 		<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 		 <!-- Custom Theme files -->
-		<link href="{{ url_for('static', filename='css/theme-style.css') }}" rel='stylesheet' type='text/css' />
+		<link href="{{ url_for('static', filename='css/login_style.css') }}" rel='stylesheet' type='text/css' />
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<!----webfonts---->
 		<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,300,500,700,800,900,600,200' rel='stylesheet' type='text/css'>
 </head>
 <body>
+        <div class="my_body">
+            <div class = "header-note"><h1>CCG Login</h1></div>
 			<div class="container">
-				<h1>Login</h1>
-				<p class="contact-head">Welcome to Columbia Cloud GYM </p>
 				<div class="row contact-form">
 						<div class="col-md-6 text-box">
                             <input type="text" id= "name" placeholder="User ID" />
@@ -24,8 +23,9 @@
 						</div>
 						<input class="btn btn-primary btn-red-lg" type="button" value="Login"  onclick="login()"/>
 				</div>
-
-<p id="Success">Success?</p>
+            </div>
+            <p class="contact-head" id="Success"></p>
+        </div>
 <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 </body>
 </html>

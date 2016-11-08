@@ -1,3 +1,6 @@
+var user_name = '';
+var pre_url = 'http://localhost:8111/'
+
 function login() {
         var name = document.getElementById("name").value;
         var password = document.getElementById("password").value;
@@ -6,17 +9,20 @@ function login() {
         ({
             type: "POST",
             //the url where you want to sent the userName and password to
-            url: 'http://localhost:8111/login',
-            async: false,
+            url: pre_url+'login',
+            async: true,
             data : JSON.stringify(my_data),
             contentType : 'application/json',
             //json object to sent to the authentication url
-            success: function () {
+            success: function (result) {
                 var output = '';
-                for (var property in result[0]) {
-                output += property + ': ' + result[0][property]+'\n';
+                user_name = result[0]["name"];
+                if(user_name.length == 0){
+                    document.getElementById("Success").innerHTML="Failed to login, please try again";
                 }
-                document.getElementById("Success").innerHTML=output;
+                else{
+                    window.location = pre_url;
                 }
-        })
+                }
+        });
 }
