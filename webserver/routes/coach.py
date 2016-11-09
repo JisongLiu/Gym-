@@ -10,10 +10,10 @@ def coach():
 
 @routes.route('/coach/gethalls',methods=['GET'])
 def halls():
-    temp = {'location':'','name':'','capacity':''}
     halls_data=[]
     cursor = g.conn.execute('SELECT * from hall;')
     for row in cursor:
+        temp = {'location':'','name':'','capacity':''}
         temp['location'] = row[0]
         temp['name'] = row[1]
         temp['capacity'] = row[2]

@@ -15,86 +15,9 @@
 </head>
 <body onload = "securitycheck()">
 	<div class = "my_body">
- 		<div class=header-note><h1 id="Success"></h1></div>
-        <div class="wrapper">
-  
-  <div class="table">
-    <div class="row header">
-      <div class="cell">
-        Name
-      </div>
-      <div class="cell">
-        Age
-      </div>
-      <div class="cell">
-        Occupation
-      </div>
-      <div class="cell">
-        Location
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="cell">
-        Luke Peters
-      </div>
-      <div class="cell">
-        25
-      </div>
-      <div class="cell">
-        Freelance Web Developer
-      </div>
-      <div class="cell">
-        Brookline, MA
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="cell">
-        Joseph Smith
-      </div>
-      <div class="cell">
-        27
-      </div>
-      <div class="cell">
-        Project Manager
-      </div>
-      <div class="cell">
-        Somerville, MA
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="cell">
-        Maxwell Johnson
-      </div>
-      <div class="cell">
-        26
-      </div>
-      <div class="cell">
-        UX Architect & Designer
-      </div>
-      <div class="cell">
-        Arlington, MA
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="cell">
-        Harry Harrison
-      </div>
-      <div class="cell">
-        25
-      </div>
-      <div class="cell">
-        Front-End Developer
-      </div>
-      <div class="cell">
-        Boston, MA
-      </div>
-    </div>
-    
-  </div>
+ 		<div class="header-note"><h1 id="Success"></h1></div>
+    <button onclick ="get_halls()">Get all halls</button>
+  <div id ="hall_table"></div>    
  	</div>
 <script src="{{ url_for('static', filename='js/coach.js') }}"></script>
 </body>
