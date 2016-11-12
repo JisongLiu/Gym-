@@ -26,15 +26,6 @@ DATABASEURI = "postgresql://jl4819:9g8v7@104.196.175.120/postgres"
 
 engine = create_engine(DATABASEURI)
 
-
-engine.execute("""DROP TABLE IF EXISTS test1;""")
-engine.execute("""CREATE TABLE IF NOT EXISTS test1 (
-  id serial,
-  name text
-);""")
-engine.execute("""INSERT INTO test1(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
-
-
 @app.before_request
 def before_request():
 
