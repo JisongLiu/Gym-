@@ -25,7 +25,7 @@ def halls():
 def available_hall():
     data = request.get_json()
     availability = []
-    cursor = g.conn.execute('SELECT timeslot from instruction; where name = \"%s\"', data['name'])
+    cursor = g.conn.execute('SELECT timeslot from instruction where name = %s', data['name'])
     for row in cursor:
         availability.append(row[0])
     resp = Response(response=json.dumps(availability),status=200, mimetype="application/json")
@@ -45,3 +45,18 @@ def trainning():
         trainning_data.append(temp)
     resp = Response(response=json.dumps(trainning_data),status=200, mimetype="application/json")
     return(resp)
+
+@routes.route('/coach/addcourse',methods=['POST'])
+def addcourse():
+    data = request.get_json()
+    cursor = g.conn.execute('SELECT cid from course where cid = %s', data['cid'])
+    existed = False
+    for row in cursor: 
+        existed = True
+    if not existed:
+        cursor = g.conn.execute('INSERT INTO course VALUES(%s,%s,%s,%s,%s)', data['cid'],data['name'],data['description'],data['tag'],data['memlevel'])
+        resp = Response(response=json.dumps([{'result':'Success'}]),status=200, mimetype="application/json")
+    else:
+        resp = Response(response=json.dumps([{'result':'Failed'}]),status=200, mimetype="application/json")
+    return(resp)
+
