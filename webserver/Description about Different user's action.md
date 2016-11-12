@@ -25,7 +25,7 @@ Getting all hall's name
 ```sql
 SELECT * FROM hall;
 ```
-Getting all occupied timeslot of the certain hall
+Getting all unoccupied timeslot of the certain hall
 ```sql
 SELECT timeslot FROM instruction WHERE name = "name";
 ```
