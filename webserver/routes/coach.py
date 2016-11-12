@@ -49,14 +49,35 @@ def trainning():
 @routes.route('/coach/addcourse',methods=['POST'])
 def addcourse():
     data = request.get_json()
-    cursor = g.conn.execute('SELECT cid from course where cid = %s', data['cid'])
-    existed = False
-    for row in cursor: 
-        existed = True
-    if not existed:
+    
+    if not checkcid(data['cid']):
         cursor = g.conn.execute('INSERT INTO course VALUES(%s,%s,%s,%s,%s)', data['cid'],data['name'],data['description'],data['tag'],data['memlevel'])
         resp = Response(response=json.dumps([{'result':'Success'}]),status=200, mimetype="application/json")
     else:
         resp = Response(response=json.dumps([{'result':'Failed'}]),status=200, mimetype="application/json")
     return(resp)
 
+def checkcid(cid):
+    cursor = g.conn.execute('SELECT cid from course where cid = %s', cid)
+    existed = False
+    for row in cursor: 
+        existed = True
+    return existed
+
+@routes.route('/coach/addinstruction',methods=['POST'])
+def addinstruction():
+    data = request.get_json()
+    if not check_time_hall(data['week'],data['time'],data['hallname']):
+        cursor = g.conn.execute('INSERT INTO instruction VALUES(%s,%s,%s,%s,%s)', data['coaid'],data['cid'],data['hallname'],data['week'],data['time'])
+        resp = Response(response=json.dumps([{'result':'Success'}]),status=200, mimetype="application/json")
+    else:
+        resp = Response(response=json.dumps([{'result':'Failed'}]),status=200, mimetype="application/json")
+    return(resp)
+
+
+def check_time_hall(week,time, hall):
+    cursor = g.conn.execute('SELECT * from instruction where week = %s and time = %s and hallname = %s', week,time,hall)
+    existed = False
+    for row in cursor: 
+        existed = True
+    return existed
