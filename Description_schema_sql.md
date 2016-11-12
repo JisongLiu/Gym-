@@ -97,14 +97,14 @@ CREATE TABLE train(
 ```
 ## relationship table instruction
 ```sql
-CREATE TABLE instruction(
-    Coaid text REFERENCES Coach,
-    Cid text REFERENCES Course,
-    Name text NOT NULL REFERENCES Hall,
-    timeslot text,
-    PRIMARY KEY(Name),
-    UNIQUE(Cid),
-    UNIQUE(Cid, TimeSlot)
+create table instruction (
+	Coaid text NOT NULL references Coach,
+        Cid text NOT NULL references Course,
+	Name text references Hall,
+	week int check (week>0 AND week<8),
+	time int check (time>18 AND time<23),
+	Unique(Coaid, week, time),
+	Primary key(Name, week, time)
 );
 ```
 ## relationship table Study
