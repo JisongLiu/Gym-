@@ -65,7 +65,7 @@ def coaches():
         coaches_data.append(temp)
     resp = Response(response=json.dumps(coaches_data),status=200, mimetype="application/json")
     return(resp)
-@routes.route('/manager/searchequipments/<keyword>',methods=['GET'])
+@routes.route('/manager/search/<keyword>',methods=['GET'])
 def search(keyword):
     search_data=[]
     cursor = g.conn.execute('SELECT * from equipment where eid=%s;',keyword)
@@ -109,6 +109,16 @@ def search(keyword):
         search_data.append(temp)
     resp = Response(response=json.dumps(search_data),status=200, mimetype="application/json")
     return(resp)
+@routes.route('/manager/delete/<keyword>',methods=['GET'])
+def delete(keyword):
+    resp = search(keyword)
+    g.conn.execute('DELETE from equipment where eid=%s;', keyword)
+    g.conn.execute('DELETE from course where cid=%s;', keyword)
+    g.conn.execute('DELETE from member where pid=%s;', keyword)
+    g.conn.execute('DELETE from coach where coaid=%s;', keyword)
+    return(resp)
+
+
 # @routes.route('/manager/searchequipments<equipment><keyword>',methods=['GET'])
 # def equipements(equipment,keyword):
 #     equipements_data=[]
