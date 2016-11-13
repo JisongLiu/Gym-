@@ -117,8 +117,55 @@ def delete(keyword):
     g.conn.execute('DELETE from member where pid=%s;', keyword)
     g.conn.execute('DELETE from coach where coaid=%s;', keyword)
     return(resp)
-
-
+@routes.route('/manager/insmat1',methods=['GET'])
+def getManager():
+    cursor = g.conn.execute('SELECT manid,name from manager;')
+    data1 = []
+    for row in cursor:
+        data1.append(row[0]+':'+row[1])
+    data1 = {'manid':data1}
+    resp = Response(response=json.dumps([data1]),status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/addinstruction',methods=['POST'])
+def createcoach():
+    data = request.get_json()
+    print("this part has been executed")
+    try:
+        g.conn.execute('INSERT INTO coach VALUES(%s,%s,%s,%s,%s,%s)', data['coaid'], data['ex_date'],data['name'], data['gender'], data['manid'],data['dob'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/addinstruction2',methods=['POST'])
+def createmember():
+    data = request.get_json()
+    print("this part has been executed")
+    try:
+        g.conn.execute('INSERT INTO member VALUES(%s,%s,%s,%s,%s,%s,%s,%s)', data['level'], data['times'],data['ex_date'], data['pid'], data['name'],data['gender'],data['manid'],data['dob'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/addinstruction3',methods=['POST'])
+def createequipment():
+    data = request.get_json()
+    print("this part has been executed")
+    try:
+        g.conn.execute('INSERT INTO equipment VALUES(%s,%s,%s,%s)', data['eid'], data['brand'],data['status'], data['category'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/addinstruction4',methods=['POST'])
+def createcourse():
+    data = request.get_json()
+    print("this part has been executed")
+    try:
+        g.conn.execute('INSERT INTO equipment VALUES(%s,%s,%s,%s,%s)', data['cid'], data['name'],data['description'], data['tag'],data['memlevel'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return(resp)
 # @routes.route('/manager/searchequipments<equipment><keyword>',methods=['GET'])
 # def equipements(equipment,keyword):
 #     equipements_data=[]
