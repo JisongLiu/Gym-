@@ -167,8 +167,78 @@ function deletereserve(){
 }
 
 function my_equipment(){
+    cleanup();
+    var my_data = {'pid':id};
+    $.ajax({
+    url: pre_url+"/myborrow",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(my_data),
+    async: true,
+    success: function (data) {
+        buildtable('table',data);
+        var result =[{'Cancel_Borrowing':[]}];
+        for(var i =0; i< data.length;i++){
+            result[0]['Cancel_Borrowing'].push(data[i]['eid'] +':'+data[i]['time']+':'+data[i]['date']);
+        }
+        build_scroll('selection2',result);
+    }
+    });
 
+    $.ajax({
+    url: pre_url+"/equipmat",
+    type: "GET",
+    contentType : 'application/json',
+    async: true,
+    success: function (data) {
+        build_scroll('selection',data);
+    }
+    });
+    $('#selection').append('<input type="date" id="currdate"></input>');
+    var button = $('<button onclick="submitequip()"></button>').text("reserve");
+    $('#selection').append(button);
+    var button = $('<button onclick="delequip()"></button>').text("Cancel");
+    $('#selection2').append(button);
 }
+
+function submitequip(){
+    result = {'pid':id};
+    var e = document.getElementById('equipment');
+    result['eid']= e.options[e.selectedIndex].text.split(":")[0];
+    e = document.getElementById('timeslot');
+    result['time'] = e.options[e.selectedIndex].text;
+    result['date'] = document.getElementById("currdate").value;
+    $.ajax({
+    url: pre_url+"/borrow",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+    }
+    });
+    my_equipment();
+}
+
+function delequip(){
+    result = {};
+    var e = document.getElementById('Cancel_Borrowing');
+    data = e.options[e.selectedIndex].text.split(":");
+    result['eid'] = data[0];
+    result['time'] = data[1]+":00:00";
+    result['date']= data[4];
+    $.ajax({
+    url: pre_url+"/borrow",
+    type: "DELETE",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+    }
+    });
+    add_private_train();
+}
+
 function build_scroll(my_scroll,dataset){
     var s_level1 = $('<fieldset></fieldset>');
     for (var i =0; i < dataset.length;i++){

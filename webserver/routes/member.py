@@ -14,15 +14,18 @@ def table_name_extracter(name):
 def member():
 	return render_template("member.html")
 
-@routes.route('/member/equipment',methods=['GET'])
-def getequipment():
+@routes.route('/member/myborrow',methods=['POST'])
+def getborrow():
 	result = []
-	table_names = table_name_extracter('equipment')
-	cursor = g.conn.execute('SELECT * from equipment;');
+	data = request.get_json()
+	cursor = g.conn.execute('SELECT brand, catagory, time, date, borrow.eid from borrow inner join equipment on equipment.eid = borrow.eid where pid = %s', data['pid']);
 	for row in cursor:
-		temp = {}
-		for i in range(len(table_names)):	
-			temp[table_names[i]]=row[i]
+		temp = {'brand':'','catagory':'','time':'','date':''}
+		temp['brand']=row[0]
+		temp['catagory'] = row[1]
+		temp['time'] = row[2].strftime('%H:%M:%S')
+		temp['date'] = row[3].strftime('%Y-%m-%d')
+		temp['eid'] = row[4]
 		result.append(temp)
 	resp = Response(response=json.dumps(result),status=200, mimetype="application/json")
 	return(resp)
@@ -113,10 +116,12 @@ def trainmat():
 
 @routes.route('/member/equipmat',methods=['GET'])
 def equipmat():
-	equip_data = [{"equipment":[]}]
-	cursor = g.conn.execute('select eif, category from equipment;')
+	equip_data = [{"equipment":[]},{"timeslot":[]}]
+	cursor = g.conn.execute('select eid, catagory from equipment;')
 	for row in cursor:
-		equip_data[0]['coach'].append(row[0]+":"+row[1])
+		equip_data[0]['equipment'].append(row[0]+":"+row[1])
+	for i in range(9,22):
+		equip_data[1]['timeslot'].append(str(i)+":00:00")
 	resp = Response(response=json.dumps(equip_data),status=200, mimetype="application/json")
 	return(resp)
 
@@ -124,6 +129,13 @@ def equipmat():
 def borrowequip():
 	data = request.get_json()
 	cursor = g.conn.execute('insert into borrow values(%s,%s,%s,%s);',data['time'],data['date'],data['eid'],data['pid'])
+	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	return(resp)
+
+@routes.route('/member/borrow',methods=['DELETE'])
+def delequip():
+	data = request.get_json()
+	cursor = g.conn.execute('delete from borrow where eid = %s and time = %s and date = %s',data['eid'],data['time'],data['date'])
 	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
 	return(resp)
 
