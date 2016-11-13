@@ -12,90 +12,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<!----webfonts---->
 		<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,300,500,700,800,900,600,200' rel='stylesheet' type='text/css'>
+    <link href="{{ url_for('static', filename='css/easydropdown.css') }}" rel='stylesheet' type='text/css'/>
+    <script src="{{ url_for('static', filename='js/jquery.easydropdown.js')}}" ></script>
 </head>
 <body onload = "securitycheck()">
 	<div class = "my_body">
  		<div class=header-note><h1 id="Success"></h1></div>
-        <div class="wrapper">
-  
-  <div class="table">
-    <div class="row header">
-      <div class="cell">
-        Name
-      </div>
-      <div class="cell">
-        Age
-      </div>
-      <div class="cell">
-        Occupation
-      </div>
-      <div class="cell">
-        Location
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="cell">
-        Luke Peters
-      </div>
-      <div class="cell">
-        25
-      </div>
-      <div class="cell">
-        Freelance Web Developer
-      </div>
-      <div class="cell">
-        Brookline, MA
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="cell">
-        Joseph Smith
-      </div>
-      <div class="cell">
-        27
-      </div>
-      <div class="cell">
-        Project Manager
-      </div>
-      <div class="cell">
-        Somerville, MA
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="cell">
-        Maxwell Johnson
-      </div>
-      <div class="cell">
-        26
-      </div>
-      <div class="cell">
-        UX Architect & Designer
-      </div>
-      <div class="cell">
-        Arlington, MA
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="cell">
-        Harry Harrison
-      </div>
-      <div class="cell">
-        25
-      </div>
-      <div class="cell">
-        Front-End Developer
-      </div>
-      <div class="cell">
-        Boston, MA
-      </div>
-    </div>
-    
+   <ul class="nav navbar-custom navbar-nav">
+                      <li>
+                          <a class="subNavBtn" onclick="explore()">Expore Openning courses</a>
+                      </li>
+                      <li>
+                          <a class="subNavBtn" onclick="my_courses()">My courses</a>
+                      </li>
+                      <li>
+                          <a class="subNavBtn" onclick="add_private_train()">My Private Trainning</a>
+                      </li>
+                      <li>
+                          <a class="subNavBtn" onclick="my_equipment()">My equipment</a>
+                      </li>
+    </ul>
+  <div id = "selection"></div>
+  <div id ="table"></div>    
   </div>
- 	</div>
 <script src="{{ url_for('static', filename='js/member.js') }}"></script>
 </body>
 </html>

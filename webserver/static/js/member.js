@@ -1,4 +1,4 @@
-var pre_url = 'http://localhost:8111/coach';
+var pre_url = 'http://localhost:8111/member';
 var id = '';
 
 function securitycheck(){
@@ -12,6 +12,115 @@ function securitycheck(){
         document.getElementById("Success").innerHTML="Welcome! "+result;
         id = result;
     }
+}
+
+function explore(){
+    cleanup();
+    $.ajax({
+    url: pre_url+"/courses",
+    type: "GET",
+    contentType : 'application/json',
+    async: true,
+    success: function (data) {
+        buildtable('table',data);
+    }
+    });
+}
+
+function my_courses(){
+    cleanup();
+    var my_data = {'pid':id};
+    $.ajax({
+    url: pre_url+"/mycourse",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(my_data),
+    async: true,
+    success: function (data) {
+        buildtable('table',data);
+    }
+    });
+    $.ajax({
+    url: pre_url+"/studymat",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(my_data),
+    async: true,
+    success: function (data) {
+        build_scroll('selection',data);
+    }
+    });
+    $('#selection').append('<input type="date" id="currdate"></input>');
+    var button = $('<button onclick="submitcourse()"></button>').text("add");
+    $('#selection').append(button);
+}
+
+function submitcourse(){
+    var result = {'pid':id} 
+    result['ex_date'] = document.getElementById("currdate").value;
+    var e = document.getElementById('course');
+    result['cid']= e.options[e.selectedIndex].text.split(":")[0];
+    $.ajax({
+    url: pre_url+"/addstudy",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+    }
+    });
+    mycourse();
+}
+
+function add_private_train(){
+
+}
+
+function my_equipment(){
+
+}
+function build_scroll(my_scroll,dataset){
+    var s_level1 = $('<fieldset></fieldset>');
+    for (var i =0; i < dataset.length;i++){
+        var id = Object.keys(dataset[i])[0];
+        var s_level2 = $('<select '+' id='+id+'></select>').addClass('dropdown');
+        var s_level3 = $('<option value=" " ></option>').addClass('label').text(id);
+        s_level2.append(s_level3);
+        for (var j =0; j < dataset[i][id].length;j++){
+            s_level3 = $('<option value='+j+'></option>').text(dataset[i][id][j]);
+            s_level2.append(s_level3);
+        }
+        s_level1.append(s_level2);
+    }
+    $('#'+my_scroll).append(s_level1);
+}
+
+function buildtable(my_table, data){
+    var t_level1 = $('<div></div>').addClass('wrapper');
+    var t_level2 = $('<div></div>').addClass('table');
+    var t_level3 = $('<div></div>').addClass('row header green');
+    for (var property in data[0]){
+        var t_level4 = $('<div></div>').addClass('cell').text(property);
+        t_level3.append(t_level4);
+    }
+    t_level2.append(t_level3);
+
+    for (var i =0; i < data.length;i++) {
+        t_level3 = $('<div></div>').addClass('row');
+        var temp_dict = data[i];
+        for(var property in temp_dict){
+            var t_level4 = $('<div></div>').addClass('cell').text(temp_dict[property]);
+            t_level3.append(t_level4);
+        }
+        t_level2.append(t_level3);
+    }
+    t_level1.append(t_level2);
+    $('#'+my_table).append(t_level1);
+}
+
+function cleanup(){
+    $('#'+'selection').empty();
+    $('#'+'table').empty();
 }
 
 function getCookie(cname) {
