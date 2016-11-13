@@ -96,7 +96,7 @@ function httpGetAsync(theUrl, keyword){
         if(data.length<=0){
                     document.getElementById("Success").innerHTML="Wrong Id";
                 }
-      else{document.getElementById("Success").innerHTML="Success!!!";buildtable('table', data);}
+      else{document.getElementById("Success").innerHTML="Success!!!";buildinput('table', data);}
   });
 }
 function httpGetAsync2(theUrl, keyword){
@@ -123,6 +123,7 @@ function add_instruction2(){
         $('#selection').append('<input type="text" id= "name" placeholder="name"></input>');
         $('#selection').append('<input type="text" id= "gender" placeholder="gender"></input>');
         $('#selection').append('<input type="text" id= "dob" placeholder="date of birth"></input>');
+        $('#selection').append('<p></p>');
         var button = $('<button onclick=\'createmember()\'></button>').text('submit');
         $('#'+'selection').append(button);
     }
@@ -142,6 +143,7 @@ function add_instruction1(){
         $('#selection').append('<input type="text" id= "name" placeholder="name"></input>');
         $('#selection').append('<input type="text" id= "gender" placeholder="gender"></input>');
         $('#selection').append('<input type="date" id= "dob" placeholder="date of birth"></input>');
+        $('#selection').append('<p></p>');
         var button = $('<button onclick=\'createcoach()\'></button>').text('submit');
         $('#'+'selection').append(button);
     }
@@ -153,6 +155,7 @@ function add_instruction3(){
         $('#selection').append('<input type="text" id= "brand" placeholder="Brand"></input>');
         $('#selection').append('<input type="text" id= "status" placeholder="Status"></input>');//need to modify
         $('#selection').append('<input type="text" id= "category" placeholder="Category"></input>');
+        $('#selection').append('<p></p>');
         var button = $('<button onclick=\'createequipment()\'></button>').text('submit');
         $('#'+'selection').append(button);
     }
@@ -163,6 +166,7 @@ function add_instruction4(){
         $('#selection').append('<input type="text" id= "description" placeholder="Description about the course"></input>');
         $('#selection').append('<input type="text" id= "tag" placeholder="Tag"></input>');
         $('#selection').append('<input type="text" id= "memlevel" placeholder="Member level requirement"></input>');// need to modify
+        $('#selection').append('<p></p>');
         var button = $('<button onclick=\'createcourse()\'></button>').text('submit');
         $('#'+'selection').append(button);
     }
@@ -271,7 +275,94 @@ function createequipment(){
     }
     });
 }
-
+function updatesubmit(){
+    if(document.getElementById('eid')){
+    var result = {'eid':'','brand':'','status':'','category':''};
+    keys = Object.keys(result);
+    for(i =0; i<keys.length;i++){
+           console.log(keys[i]);
+           var e = document.getElementById(keys[i]);
+           result[keys[i]] = document.getElementById(keys[i]).value;
+    }
+    $.ajax({
+    url: pre_url+"manager/updateequipment",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+            if(data.length<=0){
+                 document.getElementById("Success").innerHTML="Create fail";
+             }
+            else{ document.getElementById("Success").innerHTML="Create Success";}
+    }
+    });
+    }
+    else if(document.getElementById('cid')){
+    var result = {'cid':'','name':'','description':'','tag':'','memlevel':''};
+    keys = Object.keys(result);
+    for(i =0; i<keys.length;i++){
+            var e = document.getElementById(keys[i]);
+           result[keys[i]] = document.getElementById(keys[i]).value;
+    }
+    $.ajax({
+    url: pre_url+"manager/updatecourse",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+            if(data.length<=0){
+                 document.getElementById("Success").innerHTML="Create fail";
+             }
+            else{ document.getElementById("Success").innerHTML="Create Success";}
+    }
+    });
+    }
+    else if(document.getElementById('pid')){
+    var result = {'level':'','times':'','ex_date':'','pid':'','name':'','gender':'','manid':'','dob':''};
+    keys = Object.keys(result);
+    for(i =0; i<keys.length;i++){
+           var e = document.getElementById(keys[i]);
+           result[keys[i]] = document.getElementById(keys[i]).value;
+    }
+    $.ajax({
+    url: pre_url+"manager/updatemember",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+            if(data.length<=0){
+                 document.getElementById("Success").innerHTML="Create fail";
+             }
+            else{ document.getElementById("Success").innerHTML="Create Success";}
+    }
+    });
+    }
+    else if(document.getElementById('coaid')){
+    var result = {'coaid':'','ex_date':'','name':'','gender':'','manid':'','dob':''};
+    keys = Object.keys(result);
+    for(i =0; i<keys.length;i++){
+            var e = document.getElementById(keys[i]);
+           result[keys[i]] = document.getElementById(keys[i]).value;
+        }
+    $.ajax({
+    url: pre_url+"manager/updatecoach",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+            if(data.length<=0){
+                 document.getElementById("Success").innerHTML="Create fail";
+             }
+            else{ document.getElementById("Success").innerHTML="Create Success";}
+    }
+    });
+    }
+    else{}
+}
 function build_scroll(my_scroll,dataset){
     var s_level1 = $('<fieldset></fieldset>');
     for (var i =0; i < dataset.length;i++){
@@ -288,6 +379,7 @@ function build_scroll(my_scroll,dataset){
     $('#'+my_scroll).append(s_level1);
 }
 function buildtable(my_table, data){
+    cleanup();
     $('#'+my_table).empty();
     var t_level1 = $('<div></div>').addClass('wrapper');
     var t_level2 = $('<div></div>').addClass('table');
@@ -310,19 +402,18 @@ function buildtable(my_table, data){
     t_level1.append(t_level2);
     $('#'+my_table).append(t_level1);
 }
-
 function buildinput(my_input, data){
-    $('#'+my_input).empty();
-    var t_level1 = $('<div></div>');
-    for (var property in data[0]){
-        var t_level2 = $('<input type="text" id='+property+' value='+data[0][property]+' />');
-        t_level1.append(t_level2);
-    }
-    $('#'+my_input).append(t_level1);
-    var button = $('<button onclick="updatesubmit()">update</button>');
-    $('#'+my_input).append(button);
-}
-
+     cleanup();
+     $('#'+my_input).empty();
+     var t_level1 = $('<div></div>');
+     for (var property in data[0]){
+         var t_level2 = $('<input type="text" id='+property+' value='+data[0][property]+' />');
+         t_level1.append(t_level2);
+     }
+     $('#'+my_input).append(t_level1);
+     var button = $('<button onclick="updatesubmit()">update</button>');
+     $('#'+my_input).append(button);
+ }
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
