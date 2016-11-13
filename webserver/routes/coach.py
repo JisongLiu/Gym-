@@ -102,3 +102,22 @@ def getinstruction():
         result.append(temp)
     resp = Response(response=json.dumps(result),status=200, mimetype="application/json")
     return(resp)
+
+@routes.route('/coach/insmat',methods=['GET'])
+def getcourse():
+    cursor = g.conn.execute('SELECT cid,name from course;')
+    data1 = []
+    for row in cursor:
+        data1.append(row[0]+' : '+row[1])
+    data1 = {'course':data1}
+    cursor = g.conn.execute('SELECT name from hall;')
+    data2 = []
+    for row in cursor:
+        data2.append(row[0])
+    data2 = {'hall':data2}
+    data3 = {'week':range(1, 8)}
+    data4 = {'time':range(19,23)}
+    resp = Response(response=json.dumps([data1,data2,data3,data4]),status=200, mimetype="application/json")
+    return(resp)
+
+

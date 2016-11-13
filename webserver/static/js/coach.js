@@ -42,6 +42,35 @@ function get_private_train(){
     
 }
 
+function add_instruction(){
+    $.ajax({
+    url: pre_url+"coach/insmat",
+    type: "GET",
+    contentType : 'application/json',
+    async: true,
+    success: function (data) {
+        build_scroll('selection',data);
+    }
+    });
+}
+
+function build_scroll(my_scroll,dataset){
+    $('#'+my_scroll).empty();
+    var s_level1 = $('<fieldset></fieldset>');
+    for (var i =0; i < dataset.length;i++){
+        var id = Object.keys(dataset[i])[0];
+        var s_level2 = $('<select '+' id='+id+'></select>').addClass('dropdown');
+        var s_level3 = $('<option value="" ></option>').addClass('label').text(id);
+        s_level2.append(s_level3);
+        for (var j =0; j < dataset[i][id].length;j++){
+            s_level3 = $('<option value='+j+'></option>').text(dataset[i][id][j]);
+            s_level2.append(s_level3);
+        }
+        s_level1.append(s_level2);
+    }
+    $('#'+my_scroll).append(s_level1);
+}
+
 function buildtable(my_table, data){
     $('#'+my_table).empty();
     var t_level1 = $('<div></div>').addClass('wrapper');
