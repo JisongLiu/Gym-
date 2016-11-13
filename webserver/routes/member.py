@@ -63,13 +63,13 @@ def getmycourse():
 def gettrain():
 	data = request.get_json()
 	trainning_data = []
-	cursor = g.conn.execute('select time, date, pid, name from train inner join coach on (train.coaid = coach.coaid) where pid = %s;', data['pid'])
+	cursor = g.conn.execute('select time, date, coach.coaid, name from train inner join coach on (train.coaid = coach.coaid) where pid = %s;', data['pid'])
 	for row in cursor:
-		temp = {'time':'','date':'','pid':'','Coach':''}
+		temp = {'time':'','date':'','coaid':'','Coach':''}
 		temp['time'] = row[0].strftime('%H:%M:%S')
 		temp['date'] = row[1].strftime('%Y-%m-%d')
 		temp['coaid'] = row[2]
-		temp['Member'] = row[3]
+		temp['Coach'] = row[3]
 		trainning_data.append(temp)
 	resp = Response(response=json.dumps(trainning_data),status=200, mimetype="application/json")
 	return(resp)
@@ -102,10 +102,12 @@ def studymat():
 
 @routes.route('/member/trainmat',methods=['GET'])
 def trainmat():
-	study_data = [{"coach":[]}]
+	study_data = [{"coach":[]},{"timeslot":[]}]
 	cursor = g.conn.execute('select coaid, name from coach;')
 	for row in cursor:
 		study_data[0]['coach'].append(row[0]+":"+row[1])
+	for i in range(9,19):
+		study_data[1]['timeslot'].append(str(i)+":00:00")
 	resp = Response(response=json.dumps(study_data),status=200, mimetype="application/json")
 	return(resp)
 
@@ -132,10 +134,24 @@ def addtrain():
 	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
 	return(resp)
 
+@routes.route('/member/addtrain',methods=['DELETE'])
+def deletetrain():
+	data = request.get_json()
+	cursor = g.conn.execute('delete from train where coaid = %s and pid = %s',data['coaid'],data['pid'])
+	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	return(resp)
+
 @routes.route('/member/addstudy',methods=['POST'])
 def addstudy():
 	data = request.get_json()
 	cursor = g.conn.execute('insert into study values(%s,%s,%s);',data['cid'],data['pid'],data['ex_date'])
+	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	return(resp)
+
+@routes.route('/member/addstudy',methods=['DELETE'])
+def deletestudy():
+	data = request.get_json()
+	cursor = g.conn.execute('delete from study where pid = %s and cid = %s',data['pid'],data['cid'])
 	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
 	return(resp)
 

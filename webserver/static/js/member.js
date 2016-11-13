@@ -38,6 +38,11 @@ function my_courses(){
     async: true,
     success: function (data) {
         buildtable('table',data);
+        var result =[{'Drop_course':[]}];
+        for(var i =0; i< data.length;i++){
+            result[0]['Drop_course'].push(data[i]['cid'] +':'+data[i]['name']);
+        }
+        build_scroll('selection2',result);
     }
     });
     $.ajax({
@@ -53,12 +58,14 @@ function my_courses(){
     $('#selection').append('<input type="date" id="currdate"></input>');
     var button = $('<button onclick="submitcourse()"></button>').text("add");
     $('#selection').append(button);
+    var button2 = $('<button onclick="dropcourse()"></button>').text("drop");
+    $('#selection2').append(button2);
 }
 
 function submitcourse(){
     var result = {'pid':id} 
     result['ex_date'] = document.getElementById("currdate").value;
-    var e = document.getElementById('course');
+    var e = document.getElementById('Drop_course');
     result['cid']= e.options[e.selectedIndex].text.split(":")[0];
     $.ajax({
     url: pre_url+"/addstudy",
@@ -69,11 +76,94 @@ function submitcourse(){
     success: function (data) {
     }
     });
-    mycourse();
+    my_courses();
+}
+
+function dropcourse(){
+    var result = {'pid':id} 
+    var e = document.getElementById('Drop_course');
+    result['cid']= e.options[e.selectedIndex].text.split(":")[0];
+    $.ajax({
+    url: pre_url+"/addstudy",
+    type: "DELETE",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+    }
+    });
+    my_courses();
 }
 
 function add_private_train(){
+    cleanup();
+    var my_data = {'pid':id};
+    $.ajax({
+    url: pre_url+"/gettrain",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(my_data),
+    async: true,
+    success: function (data) {
+        buildtable('table',data);
+        var result =[{'Drop_trainning':[]}];
+        for(var i =0; i< data.length;i++){
+            result[0]['Drop_trainning'].push(data[i]['coaid'] +':'+data[i]['Coach']);
+        }
+        build_scroll('selection2',result);
+    }
+    });
 
+    $.ajax({
+    url: pre_url+"/trainmat",
+    type: "GET",
+    contentType : 'application/json',
+    data : JSON.stringify(my_data),
+    async: true,
+    success: function (data) {
+        build_scroll('selection',data);
+    }
+    });
+    $('#selection').append('<input type="date" id="currdate"></input>');
+    var button = $('<button onclick="submitreserve()"></button>').text("reserve");
+    $('#selection').append(button);
+    var button = $('<button onclick="deletereserve()"></button>').text("Drop_train");
+    $('#selection2').append(button);
+}
+
+function submitreserve(){
+    result = {'pid':id};
+    var e = document.getElementById('coach');
+    result['coaid']= e.options[e.selectedIndex].text.split(":")[0];
+    e = document.getElementById('timeslot');
+    result['time'] = e.options[e.selectedIndex].text;
+    result['date'] = document.getElementById("currdate").value;
+    $.ajax({
+    url: pre_url+"/addtrain",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+    }
+    });
+    add_private_train();
+}
+
+function deletereserve(){
+    result = {'pid':id};
+    var e = document.getElementById('Drop_trainning');
+    result['coaid']= e.options[e.selectedIndex].text.split(":")[0];
+    $.ajax({
+    url: pre_url+"/addtrain",
+    type: "DELETE",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+    }
+    });
+    add_private_train();
 }
 
 function my_equipment(){
@@ -120,7 +210,9 @@ function buildtable(my_table, data){
 
 function cleanup(){
     $('#'+'selection').empty();
+    $('#'+'selection2').empty();
     $('#'+'table').empty();
+    $('#Message').empty();
 }
 
 function getCookie(cname) {
