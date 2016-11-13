@@ -53,17 +53,6 @@ def trainning():
     resp = Response(response=json.dumps(trainning_data),status=200, mimetype="application/json")
     return(resp)
 
-@routes.route('/coach/addcourse',methods=['POST'])
-def addcourse():
-    data = request.get_json()
-    
-    if not checkcid(data['cid']):
-        cursor = g.conn.execute('INSERT INTO course VALUES(%s,%s,%s,%s,%s)', data['cid'],data['name'],data['description'],data['tag'],data['memlevel'])
-        resp = Response(response=json.dumps([{'result':'Success'}]),status=200, mimetype="application/json")
-    else:
-        resp = Response(response=json.dumps([{'result':'Failed'}]),status=200, mimetype="application/json")
-    return(resp)
-
 def checkcid(cid):
     cursor = g.conn.execute('SELECT cid from course where cid = %s', cid)
     existed = False
