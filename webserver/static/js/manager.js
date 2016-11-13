@@ -311,6 +311,16 @@ function buildtable(my_table, data){
     $('#'+my_table).append(t_level1);
 }
 
+function buildinput(my_input, data){
+    $('#'+my_input).empty();
+    var t_level1 = $('<div></div>');
+    for (var property in data[0]){
+        var t_level2 = $('<input type="text" id='+property+' value='+data[0][property]+'/>');
+        t_level1.append(t_level2);
+    }
+    $('#'+my_input).append(t_level1);
+}
+
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
