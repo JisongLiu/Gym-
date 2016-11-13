@@ -3,6 +3,13 @@ from . import routes
 from server import *
 import json
 
+def table_name_extracter(name):
+    cursor = g.conn.execute('SELECT column_name FROM information_schema.columns WHERE table_name= %s', name)
+    names = []
+    for row in cursor:
+        names.append(row[0])
+    return names
+
 @routes.route('/coach')
 def coach():
     return render_template("coach.html")
@@ -35,13 +42,13 @@ def available_hall():
 def trainning():
     data = request.get_json()
     trainning_data = []
-    cursor = g.conn.execute('SELECT * from train where coaid = %s;', data['coaid'])
+    cursor = g.conn.execute('select time, date, coaid, name from train inner join member on (train.pid = member.pid) where coaid = %s;', data['coaid'])
     for row in cursor:
-        temp = {'time':'','date':'','coaid':'','pid':''}
+        temp = {'time':'','date':'','coaid':'','Member':''}
         temp['time'] = row[0].strftime('%H:%M:%S')
         temp['date'] = row[1].strftime('%Y-%m-%d')
         temp['coaid'] = row[2]
-        temp['pid'] = row[3]
+        temp['Member'] = row[3]
         trainning_data.append(temp)
     resp = Response(response=json.dumps(trainning_data),status=200, mimetype="application/json")
     return(resp)
@@ -85,5 +92,13 @@ def check_time_hall(week,time, hall):
 @routes.route('/coach/getinstruction',methods=['POST'])
 def getinstruction():
     data = request.get_json()
-    pass
-    
+    result = []
+    table_names = table_name_extracter('instruction')
+    cursor = g.conn.execute('SELECT * from instruction where coaid = %s',data['coaid'])
+    for row in cursor:
+        temp = {}
+        for i in range(len(table_names)):            
+            temp[table_names[i]]=row[i]
+        result.append(temp)
+    resp = Response(response=json.dumps(result),status=200, mimetype="application/json")
+    return(resp)

@@ -15,11 +15,25 @@ function securitycheck(){
 }
 
 function get_halls(){
-    console.log("I am here");
     $.ajax({
     url: pre_url+"coach/gethalls",
     type: "GET",
     contentType : 'application/json',
+    async: true,
+    success: function (data) {
+        buildtable('hall_table',data);
+    }
+    });
+    
+}
+
+function get_private_train(){
+    var my_data = {'coaid': id}
+    $.ajax({
+    url: pre_url+"coach/gettrain",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(my_data),
     async: true,
     success: function (data) {
         buildtable('hall_table',data);
@@ -51,6 +65,7 @@ function buildtable(my_table, data){
     t_level1.append(t_level2);
     $('#'+my_table).append(t_level1);
 }
+
 
 function getCookie(cname) {
     var name = cname + "=";
