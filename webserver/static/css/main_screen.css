@@ -85,3 +85,23 @@ html,body{
 	background:url(../images/racket-icon.png) no-repeat #D34738 17px 21px;
 	border:1px solid #D34738;
 }
+.navbar-custom{
+	background: #1B242F;
+}
+.navbar-nav li a{
+	background: none;
+	text-transform: uppercase;
+	font-size: 0.875em;
+	font-weight: 300;
+	
+}
+.navbar-nav li.active a{
+	color:#E74C3C;
+}
+.subNavBtn {
+	display: block;
+	margin: 0px 0px 0 0;
+	text-decoration: none;
+	text-align: center;
+	color: #fff;
+}
