@@ -74,8 +74,8 @@ def checkcid(cid):
 @routes.route('/coach/addinstruction',methods=['POST'])
 def addinstruction():
     data = request.get_json()
-    if not check_time_hall(data['week'],data['time'],data['hallname']):
-        cursor = g.conn.execute('INSERT INTO instruction VALUES(%s,%s,%s,%s,%s)', data['coaid'],data['cid'],data['hallname'],data['week'],data['time'])
+    if not check_time_hall(data['week'],data['time'],data['hall']):
+        cursor = g.conn.execute('INSERT INTO instruction VALUES(%s,%s,%s,%s,%s)', data['coaid'],data['course'],data['hall'],data['week'],data['time'])
         resp = Response(response=json.dumps([{'result':'Success'}]),status=200, mimetype="application/json")
     else:
         resp = Response(response=json.dumps([{'result':'Failed'}]),status=200, mimetype="application/json")
@@ -108,7 +108,7 @@ def getcourse():
     cursor = g.conn.execute('SELECT cid,name from course;')
     data1 = []
     for row in cursor:
-        data1.append(row[0]+' : '+row[1])
+        data1.append(row[0]+':'+row[1])
     data1 = {'course':data1}
     cursor = g.conn.execute('SELECT name from hall;')
     data2 = []

@@ -15,6 +15,7 @@ function securitycheck(){
 }
 
 function get_halls(){
+    cleanup();
     $.ajax({
     url: pre_url+"coach/gethalls",
     type: "GET",
@@ -28,6 +29,7 @@ function get_halls(){
 }
 
 function get_private_train(){
+    cleanup();
     var my_data = {'coaid': id}
     $.ajax({
     url: pre_url+"coach/gettrain",
@@ -43,6 +45,7 @@ function get_private_train(){
 }
 
 function add_instruction(){
+    cleanup();
     $.ajax({
     url: pre_url+"coach/insmat",
     type: "GET",
@@ -52,15 +55,50 @@ function add_instruction(){
         build_scroll('selection',data);
     }
     });
+
+    var button = $('<button onclick=\'add_ins()\'></button>').text('submit');
+    $('#'+'hall_table').append(button);
+    var my_data = {'coaid': id}
+    $.ajax({
+    url: pre_url+"coach/getinstruction",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(my_data),
+    async: true,
+    success: function (data) {
+        buildtable('hall_table',data);
+    }
+    });
+}
+
+function add_ins(){
+    var result = {'course':'','hall':'','week':'','time':''};
+    keys = Object.keys(result);
+    for(i =0; i<keys.length;i++){
+        var e = document.getElementById(keys[i]);
+        result[keys[i]] = e.options[e.selectedIndex].text;
+    }
+    var data = result['course'].split(":");
+    result['course'] = data[0];
+    result['coaid']=id;
+    $.ajax({
+    url: pre_url+"coach/addinstruction",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+    }
+    });
+    add_instruction();
 }
 
 function build_scroll(my_scroll,dataset){
-    $('#'+my_scroll).empty();
     var s_level1 = $('<fieldset></fieldset>');
     for (var i =0; i < dataset.length;i++){
         var id = Object.keys(dataset[i])[0];
         var s_level2 = $('<select '+' id='+id+'></select>').addClass('dropdown');
-        var s_level3 = $('<option value="" ></option>').addClass('label').text(id);
+        var s_level3 = $('<option value=" " ></option>').addClass('label').text(id);
         s_level2.append(s_level3);
         for (var j =0; j < dataset[i][id].length;j++){
             s_level3 = $('<option value='+j+'></option>').text(dataset[i][id][j]);
@@ -72,7 +110,6 @@ function build_scroll(my_scroll,dataset){
 }
 
 function buildtable(my_table, data){
-    $('#'+my_table).empty();
     var t_level1 = $('<div></div>').addClass('wrapper');
     var t_level2 = $('<div></div>').addClass('table');
     var t_level3 = $('<div></div>').addClass('row header');
@@ -95,6 +132,10 @@ function buildtable(my_table, data){
     $('#'+my_table).append(t_level1);
 }
 
+function cleanup(){
+    $('#'+'selection').empty();
+    $('#'+'hall_table').empty();
+}
 
 function getCookie(cname) {
     var name = cname + "=";
