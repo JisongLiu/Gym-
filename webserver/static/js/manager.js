@@ -1,4 +1,5 @@
 
+
 var pre_url = 'http://localhost:8111/';
 var id = '';
 function securitycheck(){
@@ -84,14 +85,29 @@ function search(){
   httpGetAsync("manager/search/", keyword);
 }
 
+function deleteX(){
+  console.log("I am here");
+  var keyword = document.getElementById("name").value;
+  httpGetAsync2("manager/delete/", keyword);
+}
+
 function httpGetAsync(theUrl, keyword){
     $.getJSON(theUrl + keyword, function(data){
         if(data.length<=0){
                     document.getElementById("Success").innerHTML="Wrong Id";
                 }
-      else{buildtable('table', data);}
+      else{document.getElementById("Success").innerHTML="Success!!!";buildtable('table', data);}
   });
 }
+function httpGetAsync2(theUrl, keyword){
+    $.getJSON(theUrl + keyword, function(data){
+        if(data.length<=0){
+                    document.getElementById("Success").innerHTML="Wrong Id";
+                }
+      else{document.getElementById("Success").innerHTML="Thefollowing is what you have deleted";buildtable('table', data);}
+  });
+}
+
 function search_course(){
     console.log("I am here");
     $.ajax({
@@ -155,6 +171,7 @@ function buildtable(my_table, data){
     t_level1.append(t_level2);
     $('#'+my_table).append(t_level1);
 }
+
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
