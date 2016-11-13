@@ -21,21 +21,38 @@
         <input type="button" value="Search"  onclick="search()"/>
 		<input type="button" value="Delete"  onclick="deleteX()"/>
 		<div>
-        <button onclick ="get_equipment()">Get all equipment</button>
-
-		<!--<div><h1 id="Success3"></h1></div>-->
-        <button onclick ="get_course()">Get all course</button>
-		<!--<div><h1 id="Success4"></h1></div>-->
-        <button onclick ="get_member()">Get all member</button>
-		<!--<div><h1 id="Success5"></h1></div>-->
-        <button onclick ="get_coach()">Get all coach</button>
-		<button onclick="add_instruction1()">Add coach</button>
-		<button onclick="add_instruction3()">Add equipment</button>
-		<button onclick="add_instruction2()">Add member</button>
-		<button onclick="add_instruction4()">Add course</button>
-			</div>
+			<ul class="nav navbar-custom navbar-nav">
+	                    <li>
+	                        <a class="subNavBtn" onclick="get_equipment()">Get all equipment</a>
+	                    </li>
+	                    <li>
+	                        <a class="subNavBtn" onclick="get_course()">Get all course</a>
+	                    </li>
+	                    <li>
+	                        <a class="subNavBtn" onclick="get_member()">Get all member</a>
+	                    </li>
+	                    <li>
+	                        <a class="subNavBtn" onclick="get_coach()">Get all coach</a>
+	                    </li>
+						<li>
+	                        <a class="subNavBtn" onclick="add_instruction1()">Add coach</a>
+	                    </li>
+						<li>
+	                        <a class="subNavBtn" onclick="add_instruction2()">Add member</a>
+	                    </li>
+						<li>
+	                        <a class="subNavBtn" onclick="add_instruction3()">Add equipment</a>
+	                    </li>
+						<li>
+	                        <a class="subNavBtn" onclick="add_instruction4()">Add course</a>
+	                    </li>
+		</ul>
+		</div>
+		<p></p>
 		<div id = "selection"></div>
 		<div id ="table"></div>
+		<div id ="inputX"></div>
+
 
  	</div>
 <script src="{{ url_for('static', filename='js/manager.js') }}"></script>
