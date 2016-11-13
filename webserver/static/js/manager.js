@@ -1,6 +1,6 @@
+
 var pre_url = 'http://localhost:8111/';
 var id = '';
-
 function securitycheck(){
     var result = getCookie("id");
     if (result == "")
@@ -65,6 +65,73 @@ function get_coach(){
     });
 
 }
+
+//function search_equipment(equipment){
+//  console.log("I am here");
+////  var keyword = $('#serachbox').val();
+//  httpGetAsync("manager/searchequipments/", equipment);
+//}
+//
+//function httpGetAsync(theUrl, equipment){
+//
+//    $.getJSON(theUrl + equipment, function(data){
+//      buildtable('table', data);
+//  });
+//}
+function search(){
+  console.log("I am here");
+  var keyword = document.getElementById("name").value;
+  httpGetAsync("manager/search/", keyword);
+}
+
+function httpGetAsync(theUrl, keyword){
+    $.getJSON(theUrl + keyword, function(data){
+        if(data.length<=0){
+                    document.getElementById("Success").innerHTML="Wrong Id";
+                }
+      else{buildtable('table', data);}
+  });
+}
+function search_course(){
+    console.log("I am here");
+    $.ajax({
+    url: pre_url+"manager/getcourses",
+    type: "GET",
+    contentType : 'application/json',
+    async: true,
+    success: function (data) {
+        buildtable('table',data);
+    }
+    });
+
+}
+function search_member(){
+    console.log("I am here");
+    $.ajax({
+    url: pre_url+"manager/getMembers",
+    type: "GET",
+    contentType : 'application/json',
+    async: true,
+    success: function (data) {
+        buildtable('table',data);
+    }
+    });
+
+}
+function search_coach(){
+    console.log("I am here");
+    $.ajax({
+    url: pre_url+"manager/getCoaches",
+    type: "GET",
+    contentType : 'application/json',
+    async: true,
+    success: function (data) {
+        buildtable('table',data);
+    }
+    });
+
+}
+
 function buildtable(my_table, data){
     $('#'+my_table).empty();
     var t_level1 = $('<div></div>').addClass('wrapper');
