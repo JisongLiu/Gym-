@@ -17,7 +17,7 @@
 <body onload = "securitycheck()">
 	<div class = "my_body">
 		<div class="header-note"><h1 id="Success"></h1></div>
-        <input type="text" id= "name" placeholder="User ID" />
+        <input type="text" id= "keyword" placeholder="User ID" />
         <input type="button" value="Search"  onclick="search()"/>
 		<input type="button" value="Delete"  onclick="deleteX()"/>
 		<div>
@@ -29,7 +29,12 @@
         <button onclick ="get_member()">Get all member</button>
 		<!--<div><h1 id="Success5"></h1></div>-->
         <button onclick ="get_coach()">Get all coach</button>
+		<button onclick="add_instruction1()">Add coach</button>
+		<button onclick="add_instruction3()">Add equipment</button>
+		<button onclick="add_instruction2()">Add member</button>
+		<button onclick="add_instruction4()">Add course</button>
 			</div>
+		<div id = "selection"></div>
 		<div id ="table"></div>
 
  	</div>
