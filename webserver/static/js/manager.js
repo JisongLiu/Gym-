@@ -315,10 +315,12 @@ function buildinput(my_input, data){
     $('#'+my_input).empty();
     var t_level1 = $('<div></div>');
     for (var property in data[0]){
-        var t_level2 = $('<input type="text" id='+property+' value='+data[0][property]+'/>');
+        var t_level2 = $('<input type="text" id='+property+' value='+data[0][property]+' />');
         t_level1.append(t_level2);
     }
     $('#'+my_input).append(t_level1);
+    var button = $('<button onclick="updatesubmit()">update</button>');
+    $('#'+my_input).append(button);
 }
 
 function getCookie(cname) {
