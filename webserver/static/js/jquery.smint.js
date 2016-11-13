@@ -73,7 +73,6 @@ If you like Smint, or have suggestions on how it could be improved, send me a tw
 					}
 					$.each(optionLocs, function(i){
 						if(id != optionLocs[i][2]){
-							console.log(i);
 							$("#"+optionLocs[i][2]).removeClass("active");
 						}
 					});

@@ -81,3 +81,9 @@ def check_time_hall(week,time, hall):
     for row in cursor: 
         existed = True
     return existed
+
+@routes.route('/coach/getinstruction',methods=['POST'])
+def getinstruction():
+    data = request.get_json()
+    pass
+    
