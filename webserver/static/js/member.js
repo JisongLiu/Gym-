@@ -74,9 +74,15 @@ function submitcourse(){
     data : JSON.stringify(result),
     async: true,
     success: function (data) {
+        if(data["result"]=="Success"){
+            my_courses();
+        }
+        else{
+            document.getElementById("Message").innerHTML="Action Failed!";
+        }
     }
     });
-    my_courses();
+    
 }
 
 function dropcourse(){
@@ -90,9 +96,14 @@ function dropcourse(){
     data : JSON.stringify(result),
     async: true,
     success: function (data) {
+        if(data["result"]=="Success"){
+            my_courses();
+        }
+        else{
+            document.getElementById("Message").innerHTML="Action Failed!";
+        }
     }
     });
-    my_courses();
 }
 
 function add_private_train(){
@@ -145,9 +156,14 @@ function submitreserve(){
     data : JSON.stringify(result),
     async: true,
     success: function (data) {
+        if(data["result"]=="Success"){
+            add_private_train();
+        }
+        else{
+            document.getElementById("Message").innerHTML="Action Failed!";
+        }
     }
     });
-    add_private_train();
 }
 
 function deletereserve(){
@@ -161,9 +177,14 @@ function deletereserve(){
     data : JSON.stringify(result),
     async: true,
     success: function (data) {
+        if(data["result"]=="Success"){
+            add_private_train()
+        }
+        else{
+            document.getElementById("Message").innerHTML="Action Failed!";
+        }
     }
     });
-    add_private_train();
 }
 
 function my_equipment(){
@@ -215,9 +236,14 @@ function submitequip(){
     data : JSON.stringify(result),
     async: true,
     success: function (data) {
+        if(data["result"]=="Success"){
+            my_equipment();
+        }
+        else{
+            document.getElementById("Message").innerHTML="Action Failed!";
+        }
     }
     });
-    my_equipment();
 }
 
 function delequip(){
@@ -234,9 +260,14 @@ function delequip(){
     data : JSON.stringify(result),
     async: true,
     success: function (data) {
+        if(data["result"]=="Success"){
+            my_equipment();
+        }
+        else{
+            document.getElementById("Message").innerHTML="Action Failed!";
+        }
     }
     });
-    add_private_train();
 }
 
 function build_scroll(my_scroll,dataset){

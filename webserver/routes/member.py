@@ -128,42 +128,60 @@ def equipmat():
 @routes.route('/member/borrow',methods=['POST'])
 def borrowequip():
 	data = request.get_json()
-	cursor = g.conn.execute('insert into borrow values(%s,%s,%s,%s);',data['time'],data['date'],data['eid'],data['pid'])
-	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	try:
+		cursor = g.conn.execute('insert into borrow values(%s,%s,%s,%s);',data['time'],data['date'],data['eid'],data['pid'])
+		resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	except Exception:
+		resp = Response(response=json.dumps({"result":"Failed"}),status=200, mimetype="application/json")
 	return(resp)
 
 @routes.route('/member/borrow',methods=['DELETE'])
 def delequip():
 	data = request.get_json()
-	cursor = g.conn.execute('delete from borrow where eid = %s and time = %s and date = %s',data['eid'],data['time'],data['date'])
-	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	try:
+		cursor = g.conn.execute('delete from borrow where eid = %s and time = %s and date = %s',data['eid'],data['time'],data['date'])
+		resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	except Exception:
+		resp = Response(response=json.dumps({"result":"Failed"}),status=200, mimetype="application/json")
 	return(resp)
 
 @routes.route('/member/addtrain',methods=['POST'])
 def addtrain():
 	data = request.get_json()
-	cursor = g.conn.execute('insert into train values(%s,%s,%s,%s);',data['time'],data['date'],data['coaid'],data['pid'])
-	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	try:
+		cursor = g.conn.execute('insert into train values(%s,%s,%s,%s);',data['time'],data['date'],data['coaid'],data['pid'])
+		resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	except Exception:
+		resp = Response(response=json.dumps({"result":"Failed"}),status=200, mimetype="application/json")
 	return(resp)
 
 @routes.route('/member/addtrain',methods=['DELETE'])
 def deletetrain():
 	data = request.get_json()
-	cursor = g.conn.execute('delete from train where coaid = %s and pid = %s',data['coaid'],data['pid'])
-	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	try:
+		cursor = g.conn.execute('delete from train where coaid = %s and pid = %s',data['coaid'],data['pid'])
+		resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	except Exception:
+		resp = Response(response=json.dumps({"result":"Failed"}),status=200, mimetype="application/json")
 	return(resp)
 
 @routes.route('/member/addstudy',methods=['POST'])
 def addstudy():
 	data = request.get_json()
-	cursor = g.conn.execute('insert into study values(%s,%s,%s);',data['cid'],data['pid'],data['ex_date'])
-	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	try:
+		cursor = g.conn.execute('insert into study values(%s,%s,%s);',data['cid'],data['pid'],data['ex_date'])
+		resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	except Exception:
+		resp = Response(response=json.dumps({"result":"Failed"}),status=200, mimetype="application/json")
 	return(resp)
 
 @routes.route('/member/addstudy',methods=['DELETE'])
 def deletestudy():
 	data = request.get_json()
-	cursor = g.conn.execute('delete from study where pid = %s and cid = %s',data['pid'],data['cid'])
-	resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	try:
+		cursor = g.conn.execute('delete from study where pid = %s and cid = %s',data['pid'],data['cid'])
+		resp = Response(response=json.dumps({"result":"Success"}),status=200, mimetype="application/json")
+	except Exception:
+		resp = Response(response=json.dumps({"result":"Failed"}),status=200, mimetype="application/json")
 	return(resp)
 
