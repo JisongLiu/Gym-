@@ -120,4 +120,9 @@ def getcourse():
     resp = Response(response=json.dumps([data1,data2,data3,data4]),status=200, mimetype="application/json")
     return(resp)
 
-
+@routes.route('/coach/delinstruction',methods=['DELETE'])
+def delinstruction():
+    data = request.get_json()
+    cursor = g.conn.execute('delete from instruction where coaid = %s and time = %s and week = %s',data['coaid'], data['time'],data['week'])
+    resp = Response(response=json.dumps([{"result":"success"}]),status=200, mimetype="application/json")
+    return(resp)

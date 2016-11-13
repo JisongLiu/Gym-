@@ -93,6 +93,44 @@ function add_ins(){
     add_instruction();
 }
 
+function del_instruction(){
+    cleanup();
+    var my_data = {'coaid': id};
+    $.ajax({
+    url: pre_url+"coach/getinstruction",
+    type: "POST",
+    contentType : 'application/json',
+    data : JSON.stringify(my_data),
+    async: true,
+    success: function (data) {
+        buildtable('hall_table',data);
+        var data_pair = [{"record":[]}];
+        for (var i=0; i<data.length;i++){
+            data_pair[0]['record'].push(JSON.stringify(data[i]));
+        }
+        build_scroll("selection", data_pair)
+    }
+    });
+    var button = $('<button onclick=\'del_ins()\'></button>').text('submit');
+    $('#'+'hall_table').append(button);
+}
+
+function del_ins(){
+    var e = document.getElementById('record');
+    dataresult = JSON.parse(e.options[e.selectedIndex].text);
+    var result = {'coaid':id, 'week':dataresult['week'],'time':dataresult['time']};
+    $.ajax({
+    url: pre_url+"coach/delinstruction",
+    type: "DELETE",
+    contentType : 'application/json',
+    data : JSON.stringify(result),
+    async: true,
+    success: function (data) {
+    }
+    });
+    del_instruction();
+}
+
 function build_scroll(my_scroll,dataset){
     var s_level1 = $('<fieldset></fieldset>');
     for (var i =0; i < dataset.length;i++){
