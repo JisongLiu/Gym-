@@ -65,7 +65,7 @@ function my_courses(){
 function submitcourse(){
     var result = {'pid':id} 
     result['ex_date'] = document.getElementById("currdate").value;
-    var e = document.getElementById('Drop_course');
+    var e = document.getElementById('course');
     result['cid']= e.options[e.selectedIndex].text.split(":")[0];
     $.ajax({
     url: pre_url+"/addstudy",
