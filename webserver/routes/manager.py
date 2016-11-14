@@ -150,20 +150,26 @@ def createmember():
 def createequipment():
     data = request.get_json()
     print("this part has been executed")
-    try:
-        g.conn.execute('INSERT INTO equipment VALUES(%s,%s,%s,%s)', data['eid'], data['brand'],data['status'], data['category'])
-        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
-    except Exception:
+    if data['eid']!='':
+        try:
+            g.conn.execute('INSERT INTO equipment VALUES(%s,%s,%s,%s)', data['eid'], data['brand'],data['status'], data['category'])
+            resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+        except Exception:
+            resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    else:
         resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
     return(resp)
 @routes.route('/manager/addinstruction4',methods=['POST'])
 def createcourse():
     data = request.get_json()
     print("this part has been executed")
-    try:
-        g.conn.execute('INSERT INTO equipment VALUES(%s,%s,%s,%s,%s)', data['cid'], data['name'],data['description'], data['tag'],data['memlevel'])
-        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
-    except Exception:
+    if data['cid']!='':
+        try:
+            g.conn.execute('INSERT INTO course VALUES(%s,%s,%s,%s,%s)', data['cid'], data['name'],data['description'], data['tag'],data['memlevel'])
+            resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+        except Exception:
+            resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    else:
         resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
     return(resp)
 @routes.route('/manager/updateequipment',methods=['POST'])
