@@ -1,434 +1,219 @@
+from flask import render_template,Response
+from . import routes
+from server import *
+import json
+@routes.route('/manager')
+def manager():
+    return render_template("manager.html")
 
+@routes.route('/manager/getequipments',methods=['GET'])
+def equipemnts():
+    equipemnts_data=[]
+    cursor = g.conn.execute('SELECT * from equipment;')
+    for row in cursor:
+        temp = {'eid':'','brand':'','status':'','category':''}
+        temp['eid'] = row[0]
+        temp['brand'] = row[1]
+        temp['status'] = row[2]
+        temp['category'] = row[3]
+        equipemnts_data.append(temp)
+    resp = Response(response=json.dumps(equipemnts_data),status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/getcourses',methods=['GET'])
+def courses():
+    courses_data=[]
+    cursor = g.conn.execute('SELECT * from course;')
+    for row in cursor:
+        temp = {'cid':'','name':'','description':'','tag':'','memlevel':''}
+        temp['cid'] = row[0]
+        temp['name'] = row[1]
+        temp['description'] = row[2]
+        temp['tag'] = row[3]
+        temp['memlevel'] = row[4]
+        courses_data.append(temp)
+    resp = Response(response=json.dumps(courses_data),status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/getMembers',methods=['GET'])
+def members():
+    members_data=[]
+    cursor = g.conn.execute('SELECT * from member;')
+    for row in cursor:
+        temp = {'level':'','times':'','ex_date':'','pid':'','name':'','gender':'','manid':'','dob':''}
+        temp['level'] = row[0]
+        temp['times'] = row[1]
+        temp['ex_date'] = row[2].strftime('%Y-%m-%d')
+        temp['pid'] = row[3]
+        temp['name'] = row[4]
+        temp['gender'] = row[5]
+        temp['manid'] = row[6]
+        temp['dob'] = row[7].strftime('%Y-%m-%d')
+        members_data.append(temp)
+    resp = Response(response=json.dumps(members_data),status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/getCoaches',methods=['GET'])
+def coaches():
+    coaches_data=[]
+    cursor = g.conn.execute('SELECT * from coach;')
+    for row in cursor:
+        temp = {'coaid':'','ex_date':'','name':'','gender':'','manid':'','dob':''}
+        temp['coaid'] = row[0]
+        temp['ex_date'] = row[1].strftime('%Y-%m-%d')
+        temp['name'] = row[2]
+        temp['gender'] = row[3]
+        temp['manid'] = row[4]
+        temp['dob'] = row[5].strftime('%Y-%m-%d')
+        coaches_data.append(temp)
+    resp = Response(response=json.dumps(coaches_data),status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/search/<keyword>',methods=['GET'])
+def search(keyword):
+    search_data=[]
+    cursor = g.conn.execute('SELECT * from equipment where eid=%s;',keyword)
+    for row in cursor:
+        temp = {'eid':'','brand':'','status':'','category':''}
+        temp['eid'] = row[0]
+        temp['brand'] = row[1]
+        temp['status'] = row[2]
+        temp['category'] = row[3]
+        search_data.append(temp)
+    cursor = g.conn.execute('SELECT * from course where cid=%s;', keyword)
+    for row in cursor:
+        temp = {'cid':'','name':'','description':'','tag':'','memlevel':''}
+        temp['cid'] = row[0]
+        temp['name'] = row[1]
+        temp['description'] = row[2]
+        temp['tag'] = row[3]
+        temp['memlevel'] = row[4]
+        search_data.append(temp)
+    cursor = g.conn.execute('SELECT * from coach where coaid=%s;', keyword)
+    for row in cursor:
+        temp = {'coaid':'','ex_date':'','name':'','gender':'','manid':'','dob':''}
+        temp['coaid'] = row[0]
+        temp['ex_date'] = row[1].strftime('%Y-%m-%d')
+        temp['name'] = row[2]
+        temp['gender'] = row[3]
+        temp['manid'] = row[4]
+        temp['dob'] = row[5].strftime('%Y-%m-%d')
+        search_data.append(temp)
+    cursor = g.conn.execute('SELECT * from member where pid=%s;', keyword)
+    for row in cursor:
+        temp = {'level': '', 'times': '', 'ex_date': '', 'pid': '','name': '','gender': '','manid': '','dob':''}
+        temp['level'] = row[0]
+        temp['times'] = row[1]
+        temp['ex_date'] = row[2].strftime('%Y-%m-%d')
+        temp['pid'] = row[3]
+        temp['name'] = row[4]
+        temp['gender'] = row[5]
+        temp['manid'] = row[6]
+        temp['dob'] = row[7].strftime('%Y-%m-%d')
+        search_data.append(temp)
+    resp = Response(response=json.dumps(search_data),status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/delete/<keyword>',methods=['GET'])
+def delete(keyword):
+    resp = search(keyword)
+    g.conn.execute('DELETE from equipment where eid=%s;', keyword)
+    g.conn.execute('DELETE from course where cid=%s;', keyword)
+    g.conn.execute('DELETE from member where pid=%s;', keyword)
+    g.conn.execute('DELETE from coach where coaid=%s;', keyword)
+    return(resp)
+@routes.route('/manager/insmat1',methods=['GET'])
+def getManager():
+    cursor = g.conn.execute('SELECT manid,name from manager;')
+    data1 = []
+    for row in cursor:
+        data1.append(row[0]+':'+row[1])
+    data1 = {'manid':data1}
+    resp = Response(response=json.dumps([data1]),status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/addinstruction',methods=['POST'])
+def createcoach():
+    data = request.get_json()
+    print("this part has been executed")
+    try:
+        g.conn.execute('INSERT INTO coach VALUES(%s,%s,%s,%s,%s,%s)', data['coaid'], data['ex_date'],data['name'], data['gender'], data['manid'],data['dob'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/addinstruction2',methods=['POST'])
+def createmember():
+    data = request.get_json()
+    print("this part has been executed")
+    try:
+        g.conn.execute('INSERT INTO member VALUES(%s,%s,%s,%s,%s,%s,%s,%s)', data['level'], data['times'],data['ex_date'], data['pid'], data['name'],data['gender'],data['manid'],data['dob'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/addinstruction3',methods=['POST'])
+def createequipment():
+    data = request.get_json()
+    print("this part has been executed")
+    try:
+        g.conn.execute('INSERT INTO equipment VALUES(%s,%s,%s,%s)', data['eid'], data['brand'],data['status'], data['category'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/addinstruction4',methods=['POST'])
+def createcourse():
+    data = request.get_json()
+    print("this part has been executed")
+    try:
+        g.conn.execute('INSERT INTO equipment VALUES(%s,%s,%s,%s,%s)', data['cid'], data['name'],data['description'], data['tag'],data['memlevel'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return(resp)
+@routes.route('/manager/updateequipment',methods=['POST'])
+def updateequipment():
+    data = request.get_json()
+    print("this part has been executed")
+    try:
+        g.conn.execute('update equipment set brand=%s, status=%s, catagory=%s where eid=%s; ', data['brand'], data['status'],data['category'],data['eid'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return (resp)
+@routes.route('/manager/updatecourse',methods=['POST'])
+def updatecourse():
+    data = request.get_json()
+    try:
+        g.conn.execute('update course set name=%s, description=%s, tag=%s, memlevel=%s where cid=%s; ', data['name'], data['description'],data['tag'], data['memlevel'],data['cid'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return (resp)
+@routes.route('/manager/updatecoach',methods=['POST'])
+def updatecoach():
+    data = request.get_json()
+    try:
+        g.conn.execute('update coach set ex_date=%s, name=%s, gender=%s, manid=%s, dob=%s where coaid=%s; ', data['ex_date'], data['name'],data['gender'], data['manid'], data['dob'],data['coaid'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+       resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return (resp)
+@routes.route('/manager/updatemember',methods=['POST'])
+def updatemember():
+    data = request.get_json()
+    try:
+        g.conn.execute('update member set level=%s, times=%s, ex_date=%s, name=%s, gender=%s, manid=%s, dob=%s where manid=%s;', data['level'], data['times'],data['ex_date'], data['name'], data['gender'], data['manid'], data['dob'],data['pid'])
+        resp = Response(response=json.dumps([{'result': 'Success'}]), status=200, mimetype="application/json")
+    except Exception:
+        resp = Response(response=json.dumps([]), status=200, mimetype="application/json")
+    return (resp)
 
-var pre_url = 'http://localhost:8111/';
-var id = '';
-function securitycheck(){
-    var result = getCookie("id");
-    if (result == "")
-    {
-        window.location = "http://localhost:8111/another";
-    }
-    else
-    {
-        document.getElementById("Success").innerHTML="Welcome! "+result;
-        id = result;
-    }
-}
-function get_equipment(){
-    console.log("I am here");
-    $.ajax({
-    url: pre_url+"manager/getequipments",
-    type: "GET",
-    contentType : 'application/json',
-    async: true,
-    success: function (data) {
-        buildtable('table',data);
-    }
-    });
-
-}
-function get_course(){
-    console.log("I am here");
-    $.ajax({
-    url: pre_url+"manager/getcourses",
-    type: "GET",
-    contentType : 'application/json',
-    async: true,
-    success: function (data) {
-        buildtable('table',data);
-    }
-    });
-
-}
-function get_member(){
-    console.log("I am here");
-    $.ajax({
-    url: pre_url+"manager/getMembers",
-    type: "GET",
-    contentType : 'application/json',
-    async: true,
-    success: function (data) {
-        buildtable('table',data);
-    }
-    });
-
-}
-function get_coach(){
-    console.log("I am here");
-    $.ajax({
-    url: pre_url+"manager/getCoaches",
-    type: "GET",
-    contentType : 'application/json',
-    async: true,
-    success: function (data) {
-        buildtable('table',data);
-    }
-    });
-
-}
-
-//function search_equipment(equipment){
-//  console.log("I am here");
-////  var keyword = $('#serachbox').val();
-//  httpGetAsync("manager/searchequipments/", equipment);
-//}
-//
-//function httpGetAsync(theUrl, equipment){
-//
-//    $.getJSON(theUrl + equipment, function(data){
-//      buildtable('table', data);
-//  });
-//}
-function search(){
-  console.log("I am here");
-  var keyword = document.getElementById("keyword").value;
-  httpGetAsync("manager/search/", keyword);
-}
-
-function deleteX(){
-  console.log("I am here");
-  var keyword = document.getElementById("name").value;
-  httpGetAsync2("manager/delete/", keyword);
-}
-
-function httpGetAsync(theUrl, keyword){
-    $.getJSON(theUrl + keyword, function(data){
-        if(data.length<=0){
-                    document.getElementById("Success").innerHTML="Wrong Id";
-                }
-      else{document.getElementById("Success").innerHTML="Success!!!";buildinput('table', data);}
-  });
-}
-function httpGetAsync2(theUrl, keyword){
-    $.getJSON(theUrl + keyword, function(data){
-        if(data.length<=0){
-                    document.getElementById("Success").innerHTML="Wrong Id";
-                }
-      else{document.getElementById("Success").innerHTML="The following is what you have deleted";buildtable('table', data);}
-  });
-}
-function add_instruction2(){
-    cleanup();
-    $.ajax({
-    url: pre_url+"manager/insmat1",
-    type: "GET",
-    contentType : 'application/json',
-    async: true,
-    success: function (data) {
-        build_scroll('selection',data);
-        $('#selection').append('<input type="text" id= "level" placeholder="level"></input>');//need to modify
-        $('#selection').append('<input type="text" id= "times" placeholder="times"></input>');
-        $('#selection').append('<input type="text" id= "ex_date" placeholder="ex_date"></input>');
-        $('#selection').append('<input type="text" id= "pid" placeholder="member ID"></input>');
-        $('#selection').append('<input type="text" id= "name" placeholder="name"></input>');
-        $('#selection').append('<input type="text" id= "gender" placeholder="gender"></input>');
-        $('#selection').append('<input type="text" id= "dob" placeholder="date of birth"></input>');
-        $('#selection').append('<p></p>');
-        var button = $('<button onclick=\'createmember()\'></button>').text('submit');
-        $('#'+'selection').append(button);
-    }
-    });
-}
-function add_instruction1(){
-    cleanup();
-    $.ajax({
-    url: pre_url+"manager/insmat1",
-    type: "GET",
-    contentType : 'application/json',
-    async: true,
-    success: function (data) {
-        build_scroll('selection',data);
-        $('#selection').append('<input type="text" id= "coaid" placeholder="coach id"></input>');
-        $('#selection').append('<input type="date" id= "ex_date" placeholder="ex_date"></input>');
-        $('#selection').append('<input type="text" id= "name" placeholder="name"></input>');
-        $('#selection').append('<input type="text" id= "gender" placeholder="gender"></input>');
-        $('#selection').append('<input type="date" id= "dob" placeholder="date of birth"></input>');
-        $('#selection').append('<p></p>');
-        var button = $('<button onclick=\'createcoach()\'></button>').text('submit');
-        $('#'+'selection').append(button);
-    }
-    });
-}
-function add_instruction3(){
-    cleanup();
-        $('#selection').append('<input type="text" id= "eid" placeholder="Equipment ID"></input>');
-        $('#selection').append('<input type="text" id= "brand" placeholder="Brand"></input>');
-        $('#selection').append('<input type="text" id= "status" placeholder="Status"></input>');//need to modify
-        $('#selection').append('<input type="text" id= "category" placeholder="Category"></input>');
-        $('#selection').append('<p></p>');
-        var button = $('<button onclick=\'createequipment()\'></button>').text('submit');
-        $('#'+'selection').append(button);
-    }
-function add_instruction4(){
-    cleanup();
-        $('#selection').append('<input type="text" id= "cid" placeholder="Course ID"></input>');
-        $('#selection').append('<input type="text" id= "name" placeholder="Name"></input>');
-        $('#selection').append('<input type="text" id= "description" placeholder="Description about the course"></input>');
-        $('#selection').append('<input type="text" id= "tag" placeholder="Tag"></input>');
-        $('#selection').append('<input type="text" id= "memlevel" placeholder="Member level requirement"></input>');// need to modify
-        $('#selection').append('<p></p>');
-        var button = $('<button onclick=\'createcourse()\'></button>').text('submit');
-        $('#'+'selection').append(button);
-    }
-function createcoach(){
-    var result = {'coaid':'','ex_date':'','name':'','gender':'','manid':'','dob':''};
-    keys = Object.keys(result);
-    for(i =0; i<keys.length;i++){
-        if(keys[i]!='manid'){
-            var e = document.getElementById(keys[i]);
-           result[keys[i]] = document.getElementById(keys[i]).value;
-        }
-        else{
-            var e = document.getElementById(keys[i]);
-            console.log(keys[i]);
-            result[keys[i]] = e.options[e.selectedIndex].text;
-        }
-
-    }
-    var data = result['manid'].split(":");
-    result['manid'] = data[0];
-    $.ajax({
-    url: pre_url+"manager/addinstruction",
-    type: "POST",
-    contentType : 'application/json',
-    data : JSON.stringify(result),
-    async: true,
-    success: function (data) {
-            if(data.length<=0){
-                 document.getElementById("Success").innerHTML="Create fail";
-             }
-            else{ document.getElementById("Success").innerHTML="Create Success";}
-    }
-    });
-}
-function createcourse(){
-    var result = {'cid':'','name':'','description':'','tag':'','memlevel':''};
-    keys = Object.keys(result);
-    for(i =0; i<keys.length;i++){
-            var e = document.getElementById(keys[i]);
-           result[keys[i]] = document.getElementById(keys[i]).value;
-    }
-    $.ajax({
-    url: pre_url+"manager/addinstruction4",
-    type: "POST",
-    contentType : 'application/json',
-    data : JSON.stringify(result),
-    async: true,
-    success: function (data) {
-            if(data.length<=0){
-                 document.getElementById("Success").innerHTML="Create fail";
-             }
-            else{ document.getElementById("Success").innerHTML="Create Success";}
-    }
-    });
-}
-function createmember(){
-    var result = {'level':'','times':'','ex_date':'','pid':'','name':'','gender':'','manid':'','dob':''};
-    keys = Object.keys(result);
-    for(i =0; i<keys.length;i++){
-        if(keys[i]!='manid'){
-            var e = document.getElementById(keys[i]);
-           result[keys[i]] = document.getElementById(keys[i]).value;
-        }
-        else{
-            var e = document.getElementById(keys[i]);
-            console.log(keys[i]);
-            result[keys[i]] = e.options[e.selectedIndex].text;
-        }
-
-    }
-    var data = result['manid'].split(":");
-    result['manid'] = data[0];
-    $.ajax({
-    url: pre_url+"manager/addinstruction2",
-    type: "POST",
-    contentType : 'application/json',
-    data : JSON.stringify(result),
-    async: true,
-    success: function (data) {
-            if(data.length<=0){
-                 document.getElementById("Success").innerHTML="Create fail";
-             }
-            else{ document.getElementById("Success").innerHTML="Create Success";}
-    }
-    });
-}
-function createequipment(){
-    var result = {'eid':'','brand':'','status':'','category':''};
-    keys = Object.keys(result);
-    for(i =0; i<keys.length;i++){
-           console.log(keys[i]);
-           var e = document.getElementById(keys[i]);
-           result[keys[i]] = document.getElementById(keys[i]).value;
-    }
-    $.ajax({
-    url: pre_url+"manager/addinstruction3",
-    type: "POST",
-    contentType : 'application/json',
-    data : JSON.stringify(result),
-    async: true,
-    success: function (data) {
-            if(data.length<=0){
-                 document.getElementById("Success").innerHTML="Create fail";
-             }
-            else{ document.getElementById("Success").innerHTML="Create Success";}
-    }
-    });
-}
-function updatesubmit(){
-    if(document.getElementById('eid')){
-    var result = {'eid':'','brand':'','status':'','category':''};
-    keys = Object.keys(result);
-    for(i =0; i<keys.length;i++){
-           console.log(keys[i]);
-           var e = document.getElementById(keys[i]);
-           result[keys[i]] = document.getElementById(keys[i]).value;
-    }
-    $.ajax({
-    url: pre_url+"manager/updateequipment",
-    type: "POST",
-    contentType : 'application/json',
-    data : JSON.stringify(result),
-    async: true,
-    success: function (data) {
-            if(data.length<=0){
-                 document.getElementById("Success").innerHTML="Create fail";
-             }
-            else{ document.getElementById("Success").innerHTML="Create Success";}
-    }
-    });
-    }
-    else if(document.getElementById('cid')){
-    var result = {'cid':'','name':'','description':'','tag':'','memlevel':''};
-    keys = Object.keys(result);
-    for(i =0; i<keys.length;i++){
-            var e = document.getElementById(keys[i]);
-           result[keys[i]] = document.getElementById(keys[i]).value;
-    }
-    $.ajax({
-    url: pre_url+"manager/updatecourse",
-    type: "POST",
-    contentType : 'application/json',
-    data : JSON.stringify(result),
-    async: true,
-    success: function (data) {
-            if(data.length<=0){
-                 document.getElementById("Success").innerHTML="Create fail";
-             }
-            else{ document.getElementById("Success").innerHTML="Create Success";}
-    }
-    });
-    }
-    else if(document.getElementById('pid')){
-    var result = {'level':'','times':'','ex_date':'','pid':'','name':'','gender':'','manid':'','dob':''};
-    keys = Object.keys(result);
-    for(i =0; i<keys.length;i++){
-           var e = document.getElementById(keys[i]);
-           result[keys[i]] = document.getElementById(keys[i]).value;
-    }
-    $.ajax({
-    url: pre_url+"manager/updatemember",
-    type: "POST",
-    contentType : 'application/json',
-    data : JSON.stringify(result),
-    async: true,
-    success: function (data) {
-            if(data.length<=0){
-                 document.getElementById("Success").innerHTML="Create fail";
-             }
-            else{ document.getElementById("Success").innerHTML="Create Success";}
-    }
-    });
-    }
-    else if(document.getElementById('coaid')){
-    var result = {'coaid':'','ex_date':'','name':'','gender':'','manid':'','dob':''};
-    keys = Object.keys(result);
-    for(i =0; i<keys.length;i++){
-            var e = document.getElementById(keys[i]);
-           result[keys[i]] = document.getElementById(keys[i]).value;
-        }
-    $.ajax({
-    url: pre_url+"manager/updatecoach",
-    type: "POST",
-    contentType : 'application/json',
-    data : JSON.stringify(result),
-    async: true,
-    success: function (data) {
-            if(data.length<=0){
-                 document.getElementById("Success").innerHTML="Create fail";
-             }
-            else{ document.getElementById("Success").innerHTML="Create Success";}
-    }
-    });
-    }
-    else{}
-}
-function build_scroll(my_scroll,dataset){
-    var s_level1 = $('<fieldset></fieldset>');
-    for (var i =0; i < dataset.length;i++){
-        var id = Object.keys(dataset[i])[0];
-        var s_level2 = $('<select '+' id='+id+'></select>').addClass('dropdown');
-        var s_level3 = $('<option value=" " ></option>').addClass('label').text(id);
-        s_level2.append(s_level3);
-        for (var j =0; j < dataset[i][id].length;j++){
-            s_level3 = $('<option value='+j+'></option>').text(dataset[i][id][j]);
-            s_level2.append(s_level3);
-        }
-        s_level1.append(s_level2);
-    }
-    $('#'+my_scroll).append(s_level1);
-}
-function buildtable(my_table, data){
-    cleanup();
-    $('#'+my_table).empty();
-    var t_level1 = $('<div></div>').addClass('wrapper');
-    var t_level2 = $('<div></div>').addClass('table');
-    var t_level3 = $('<div></div>').addClass('row header blue');
-    for (var property in data[0]){
-        var t_level4 = $('<div></div>').addClass('cell').text(property);
-        t_level3.append(t_level4);
-    }
-    t_level2.append(t_level3);
-
-    for (var i =0; i < data.length;i++) {
-        t_level3 = $('<div></div>').addClass('row');
-        var temp_dict = data[i];
-        for(var property in temp_dict){
-            var t_level4 = $('<div></div>').addClass('cell').text(temp_dict[property]);
-            t_level3.append(t_level4);
-        }
-        t_level2.append(t_level3);
-    }
-    t_level1.append(t_level2);
-    $('#'+my_table).append(t_level1);
-}
-function buildinput(my_input, data){
-     cleanup();
-     $('#'+my_input).empty();
-     var t_level1 = $('<div></div>');
-     for (var property in data[0]){
-         var t_level2 = $('<input type="text" id='+property+' value='+data[0][property]+' />');
-         t_level1.append(t_level2);
-     }
-     $('#'+my_input).append(t_level1);
-     var button = $('<button onclick="updatesubmit()">update</button>');
-     $('#'+my_input).append(button);
- }
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-function cleanup(){
-    $('#'+'selection').empty();
-    $('#'+'table').empty();
-}
+# @routes.route('/manager/searchequipments<equipment><keyword>',methods=['GET'])
+# def equipements(equipment,keyword):
+#     equipements_data=[]
+#     cursor = g.conn.execute('SELECT * from %s where eid=%s;' %equipment %keyword)
+#     for row in cursor:
+#         temp = {'eid':'','brand':'','status':'','category':''}
+#         temp['eid'] = row[0]
+#         temp['brand'] = row[1]
+#         temp['status'] = row[2]
+#         temp['category'] = row[3]
+#         equipements_data.append(temp)
+#     resp = Response(response=json.dumps(equipements_data),status=200, mimetype="application/json")
+#     return(resp)
