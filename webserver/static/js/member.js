@@ -1,4 +1,4 @@
-var pre_url = 'http://localhost:8111/member';
+var pre_url = 'http://104.196.133.44:8111/member';
 var id = '';
 
 function securitycheck(){
