@@ -10,6 +10,7 @@ function login() {
             //the url where you want to sent the userName and password to
             url: pre_url+'login',
             async: true,
+            crossDomain: true,
             data : JSON.stringify(my_data),
             contentType : 'application/json',
             //json object to sent to the authentication url
