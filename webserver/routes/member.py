@@ -50,7 +50,7 @@ def getmycourse():
 	table_names = table_name_extracter('course')
 	table_names.remove('memlevel')
 	table_names.append('ex_date')
-	cursor = g.conn.execute('SELECT study.cid, name, description, tag, ex_date from study inner join course on (study.cid = course.cid) where pid = %s;', data['pid']);
+	cursor = g.conn.execute('SELECT study.cid, name, description, tag, ex_date from study, course where pid = %s and study.cid = course.cid;', data['pid']);
 	for row in cursor:
 		temp = {}
 		for i in range(len(table_names)):	
@@ -96,7 +96,7 @@ def getcoach():
 def studymat():
 	study_data = [{"course":[]}]
 	data = request.get_json()
-	cursor = g.conn.execute('select cid, course.name from course inner join member on (course.memlevel <= member.level) where member.pid = %s;', data['pid'])
+	cursor = g.conn.execute('select instruction.cid, course.name from instruction, member, course where instruction.cid = course.cid and course.memlevel <= member.level and member.pid = %s;', data['pid'])
 	for row in cursor:
 		study_data[0]['course'].append(row[0]+":"+row[1])
 	resp = Response(response=json.dumps(study_data),status=200, mimetype="application/json")
