@@ -6,7 +6,7 @@ function securitycheck(){
     var result = getCookie("id");
     if (result == "")
     {
-        window.location = "http://localhost:8111/another";
+        window.location = pre_url+"another";
     }
     else
     {

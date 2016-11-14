@@ -5,7 +5,7 @@ function securitycheck(){
     var result = getCookie("id");
     if (result == "")
     {
-        window.location = "http://localhost:8111/another";
+        window.location = "http://104.196.133.44:8111/another";
     }
     else
     {
