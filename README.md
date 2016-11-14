@@ -33,4 +33,4 @@ The Cloud Gym Management System is aimed to provide the modern informatized fitn
 - a coach could organize at most one course in a time slot
 - a hall could be reserved by at most one coach in a time slot
 - Course and Open are weak entity
-!(https://octodex.github.com/images/yaktocat.png)
+![](https://octodex.github.com/images/yaktocat.png)
