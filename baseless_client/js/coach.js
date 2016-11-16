@@ -1,16 +1,15 @@
-var pre_url = 'http://localhost:8111/';
+var pre_url = 'http://35.185.2.157:8111/';
 var id = '';
 
 function securitycheck(){
-    var result = getCookie("id");
-    if (result == "")
-    {
+    var idx = document.URL.indexOf('?identity=');
+    if (idx == -1) {
         window.location = "login.html";
     }
     else
     {
-        document.getElementById("Success").innerHTML="Welcome! "+result;
-        id = result;
+        id = document.URL.substr(idx+10);
+        document.getElementById("Success").innerHTML="Welcome! "+id;
     }
 }
 

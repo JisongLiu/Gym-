@@ -1,4 +1,4 @@
-var pre_url = 'http://127.0.0.1:8111/'
+var pre_url = 'http://35.185.2.157:8111/'
 
 function login() {
         
@@ -25,8 +25,7 @@ function login() {
                     console.log("I have been here 1");
                 }
                 else{
-                    document.cookie = "id=" + user_id + ";path="+identity+".html";
-                    window.location = identity+".html";
+                    window.location = identity+".html?identity="+user_id;
                     console.log("I have been here 2");
                 }
                 }
