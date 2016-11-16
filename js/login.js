@@ -1,4 +1,4 @@
-var pre_url = 'http://35.185.2.157:8111/'
+var pre_url = 'https://35.185.2.157:8111/'
 
 function login() {
         
