@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href=" images/fav-icon.png " />
+		<link href=" css/bootstrap.css " rel='stylesheet' type='text/css' />
+		<link href=" css/bootstrap.min.css " rel='stylesheet' type='text/css' />
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src=" js/jquery.min.js "></script>
+		 <!-- Custom Theme files -->
+		<link href=" css/main_screen.css " rel='stylesheet' type='text/css' />
+        <link href=" css/table.css " rel='stylesheet' type='text/css'/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<!----webfonts---->
+		<link href='http://fonts.googleapis.com/css?family=Raleway:400,100,300,500,700,800,900,600,200' rel='stylesheet' type='text/css'>
+	    <!--<style> div{float:left} </style>-->
+</head>
+<body onload = "securitycheck()">
+	<div class = "my_body">
+		<div class="header-note"><h1 id="Success"></h1></div>
+        <input type="text" id= "keyword" placeholder="User ID" />
+        <input type="button" value="Search"  onclick="search()"/>
+		<input type="button" value="Delete"  onclick="deleteX()"/>
+		<div>
+			<ul class="nav navbar-custom navbar-nav">
+	                    <li>
+	                        <a class="subNavBtn" onclick="get_equipment()">Get all equipment</a>
+	                    </li>
+	                    <li>
+	                        <a class="subNavBtn" onclick="get_course()">Get all course</a>
+	                    </li>
+	                    <li>
+	                        <a class="subNavBtn" onclick="get_member()">Get all member</a>
+	                    </li>
+	                    <li>
+	                        <a class="subNavBtn" onclick="get_coach()">Get all coach</a>
+	                    </li>
+						<li>
+	                        <a class="subNavBtn" onclick="add_instruction1()">Add coach</a>
+	                    </li>
+						<li>
+	                        <a class="subNavBtn" onclick="add_instruction2()">Add member</a>
+	                    </li>
+						<li>
+	                        <a class="subNavBtn" onclick="add_instruction3()">Add equipment</a>
+	                    </li>
+						<li>
+	                        <a class="subNavBtn" onclick="add_instruction4()">Add course</a>
+	                    </li>
+		</ul>
+		</div>
+		<p></p>
+		<div id = "selection"></div>
+		<div id ="table"></div>
+		<div id ="inputX"></div>
+
+
+ 	</div>
+<script src=" js/manager.js "></script>
+</body>
+</html>
